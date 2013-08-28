@@ -1,0 +1,9 @@
+ <div class="hero-unit">
+ 	<p></p><h1>Register</h1></p>
+ 	<p>First Name <%== text_field_tag :first_name, "", size: 40 %></p>
+ 	<p>Last Name <%== text_field_tag :last_name, "", size: 40 %></p>
+    <p>Email Address <%== text_field_tag :email, "", size: 40 %></p>
+    <p>Password <%== password_field_tag(:password) %></p>
+    <p>Password Confirmation <%== password_field_tag(:password_confirmation) %></p>
+    <p><%== submit_tag "Register" %></p>
+  </div>

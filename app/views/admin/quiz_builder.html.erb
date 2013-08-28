@@ -1,0 +1,26 @@
+<div class="well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Quiz Name</th>
+        <th>Category and Qty</th>
+        <th>Users</th>
+      </tr>
+    </thead>
+    <tbody>
+       <tr>
+        <td><%== text_field_tag :quiz_name, "", size: 40 %></td>
+        <td>
+          <% Category.all.each do |category| %>
+          <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", "", size: 40 %><br>
+        <% end %>
+        </td>
+        <td>  
+          <% User.order(:name).all.each do |user| %>
+            <%== check_box_tag "user#{user.id}", "on" %> <%= user.name %><br>
+          <% end %>
+        </td>
+        </td>
+      </tr>
+  </table>
+</div>

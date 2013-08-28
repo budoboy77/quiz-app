@@ -1,0 +1,62 @@
+<div class="well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Question Category</th>
+        <th>Question Type</th>
+        <th>Question Text</th>
+        <th>Choices<small>- check box next to correct answer.</small></th>
+      </tr>
+    </thead>
+    <tbody>
+       <tr>
+        <td><%== select_tag :category, options_from_collection_for_select(@categories, :name, :name, @category), prompt: "Choose a category..." %><br>
+          <hr>
+          Add a new category<br>
+          <%== text_field_tag :new_category, "", size: 40 %></td>
+        <td><%== select_tag :type, options_from_collection_for_select(@types, :name, :name, @type), prompt: "Choose a type..." %><br>
+          <hr>
+          Add a new type<br>
+          <%== text_field_tag :new_type, "", size: 40 %></td>
+        <td><%== text_area_tag :text, @text, rows: 3, cols: 100 %></td>
+        <td><%== text_field_tag :choice1, @choice1, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer1, "on" %></label><br><%== text_field_tag :choice2, @choice2, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer2, "on" %></label><br><%== text_field_tag :choice3, @choice3, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer3, "on" %></label><br><%== text_field_tag :choice4, @choice4, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer4, "on" %></label></td>
+      </tr>
+  </table>
+  <% if params[:id] != "new" %>
+    <%== submit_tag "Update question" %> <%== submit_tag "Delete question" %>
+  <% else %>    
+    <%== submit_tag "Add question" %>
+  <% end %>
+</div>
+<div class="well">
+  <table class="table table-striped table-hover table-bordered table-fixed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Category</th>
+      <th>Type</th>
+      <th>Question text<br><%== text_field_tag :criteria, "", size: 20 %><%== submit_tag "Search" %></th>
+      <th>Choice 1</th>
+      <th>Choice 2</th>
+      <th>Choice 3</th>
+      <th>Choice 4</th>
+      <th>Correct Answer<br></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @questions.each do |question| %>
+    <tr>
+      <td><a class=btn href="/admin/questions/<%= question.id %>">Edit</a></td>
+      <td><%= question.question_category %></td>
+      <td><%= question.question_type %></td>
+      <td><%= question.question_text %></td>
+      <td><%= question.choice1 %></td>
+      <td><%= question.choice2 %></td>
+      <td><%= question.choice3 %></td>
+      <td><%= question.choice4 %></td>
+      <td><%= question.correct_answer %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
