@@ -1,11 +1,12 @@
 class MainController < ApplicationController
 
 	def register_get
+		@title = "Register"
 		render :register and return
 	end
 
 	def register_post
-		@register_title = "Register"
+		@title = "Register"
 		user = User.new
 		user.first_name = params[:first_name]
 		user.last_name = params[:last_name]
@@ -17,8 +18,23 @@ class MainController < ApplicationController
 				render :register and return
 			else
 				user.save!
-				redirect_to "/login"
+				redirect_to "/quiz" and return
 			end
+	end
+
+	def login_get
+		render :login and return
+	end
+
+	def login_post
+		if User.where(email: params[:email]).first == nil
+			render :login and return
+		end
+		if User.where(email: params[:email]).first.authenticate(params[:password]) != false
+			redirect_to "/quiz" and return
+		else
+			render :login and return
+		end
 	end
 
 	def quiz_builder_get

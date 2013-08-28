@@ -5,6 +5,7 @@ class AdminController < ApplicationController
   end
 
   def questions_get
+  	@title = "Questions"
 	redirect_to "/admin/questions/new" and return
   end
 
