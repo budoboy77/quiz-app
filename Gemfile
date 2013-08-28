@@ -46,3 +46,4 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'dynamic_form' # for error_message_for
 gem 'rake_db_dump'
 gem 'rails-footnotes', group: :development
+gem 'rack-flash3', require: 'rack-flash'
