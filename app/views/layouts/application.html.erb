@@ -1,62 +1,50 @@
 <html>
   
   <head>
-    <% if @register_title != "" %>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+    <% if @title == "Register" %>
       <title>Register New User</title>
     <% else %>
       <title>Quiz App - <%= @title %></title>
     <% end %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap-responsive.css">
-    <!-- <link rel="stylesheet" href="/stylesheets/google-bootstrap.css"> -->
-    <link rel="stylesheet" href="/stylesheets/divshot-util.css">
-    <link rel="stylesheet" href="/stylesheets/divshot-canvas.css">
-    <script src="/js/add-param-labels.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script>
       document.domain = 'divshot.com';
     </script>
   </head>
   
   <body>
-    <% if @register_title != "" %>
+    <% if @title == "Register" %>
       <title>Register New User</title>
     <% else %>
       <title>Quiz App - <%= @title %></title>
-    <% end %>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap-responsive.css">
-    <link rel="stylesheet" href="/stylesheets/divshot-util.css">
-    <link rel="stylesheet" href="/stylesheets/divshot-canvas.css">
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <% if @register_title != "" %>
-            <title>Register New User</title>
-          <% else %>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
             <a class="brand" href="#">Quiz App - <%= @title %></a>
-          <div class="navbar-content">
-            <ul class="nav  pull-right">
-              <li class="active">
-                <a href="#">Home</a> 
-              </li>
-              <li>
-                <a href="/helppage">Help</a> 
-              </li>
-              <li>
-                <a href="#">Logout</a> 
-              </li>
-            </ul>
+            <div class="navbar-content">
+              <ul class="nav  pull-right">
+                <li class="active">
+                  <a href="#">Home</a> 
+                </li>
+                <li>
+                  <a href="/helppage">Help</a> 
+                </li>
+                <li>
+                  <a href="#">Logout</a> 
+                </li>
+              </ul>
+            </div>
           </div>
-          <% end %>
         </div>
       </div>
-    </div>
+    <% end %>
+    
     <%== form_tag request.path_info %>
 <%== yield %>
   </body>
