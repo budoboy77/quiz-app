@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  host: localhost
+  database: quiz-app
+  username: postgres
+  password: postgres
+  encoding: unicode
