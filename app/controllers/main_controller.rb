@@ -23,10 +23,12 @@ class MainController < ApplicationController
 	end
 
 	def login_get
+		@title = "Login"
 		render :login and return
 	end
 
 	def login_post
+		@title = "Login"
 		if User.where(email: params[:email]).first == nil
 			render :login and return
 		end

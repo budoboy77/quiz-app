@@ -6,6 +6,8 @@
     <%= csrf_meta_tags %>
     <% if @title == "Register" %>
       <title>Register New User</title>
+    <% elsif @title == "Login" %>
+      <title>Login</title>
     <% else %>
       <title>Quiz App - <%= @title %></title>
     <% end %>
@@ -19,6 +21,8 @@
   <body>
     <% if @title == "Register" %>
       <title>Register New User</title>
+    <% elsif @title == "Login" %>
+      <title>Login</title>
     <% else %>
       <title>Quiz App - <%= @title %></title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
