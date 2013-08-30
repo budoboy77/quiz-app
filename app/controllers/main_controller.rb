@@ -45,11 +45,6 @@ class MainController < ApplicationController
 		end
 	end
 
-	def quiz_builder_get
-		@categories = Category.order(:name).all
-		render :quiz_builder and return
-	end
-
 	def quiz_get
 		@title = "quiz"
 		render :quiz and return

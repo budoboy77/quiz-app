@@ -155,4 +155,9 @@ class AdminController < ApplicationController
 	type.save!
 	redirect_to "/admin/types/new" and return
   end
+
+  def quiz_builder_get
+	@categories = Category.order(:name).all
+	render :quiz_builder and return
+  end
 end
