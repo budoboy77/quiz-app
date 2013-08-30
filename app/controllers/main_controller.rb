@@ -22,7 +22,7 @@ class MainController < ApplicationController
 				render :register and return
 			else
 				user.save!
-				redirect_to "/quiz" and return
+				redirect_to "/login" and return
 			end
 	end
 
