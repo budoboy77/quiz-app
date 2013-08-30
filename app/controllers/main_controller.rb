@@ -34,11 +34,13 @@ class MainController < ApplicationController
 	def login_post
 		@title = "Login"
 		if User.where(email: params[:email]).first == nil
+			flash.now[:error] = "Login failed.  Invalid user name."
 			render :login and return
 		end
 		if User.where(email: params[:email]).first.authenticate(params[:password]) != false
 			redirect_to "/quiz" and return
 		else
+			flash.now[:error] = "Login failed.  Check your user name and password."
 			render :login and return
 		end
 	end
@@ -59,6 +61,6 @@ class MainController < ApplicationController
 	end
 
 	def clicked_get
-		render :clicked and return
+		render :clicked_button and return
 	end
 end
