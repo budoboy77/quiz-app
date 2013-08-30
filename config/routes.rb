@@ -4,7 +4,6 @@ QuizApp::Application.routes.draw do
   post "/register"              => "main#register_post"
   get "/login"                  => "main#login_get"
   post "/login"                 => "main#login_post"
-  get "/admin/quiz-builder"     => "main#quiz_builder_get"
   get "/quiz"                   => "main#quiz_get"
   get "/help"                   => "main#help_get"
   get "/clicked"                => "main#clicked_get"
@@ -18,4 +17,5 @@ QuizApp::Application.routes.draw do
   get "/admin/types"            => "admin#types_get"
   get "/admin/types/:id"        => "admin#types_params_get"
   post "/admin/types/:id"       => "admin#types_params_post"
+  get "/admin/quiz-builder"     => "admin#quiz_builder_get"
 end
