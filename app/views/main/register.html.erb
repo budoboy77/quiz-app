@@ -1,6 +1,12 @@
+ <% if flash[:error] %>
+  <div class="flash-error">
+    <%= flash[:error] %>
+  </div>
+ <% end %>
+
  <div class="hero-unit">
- 	<p></p><h1>Quiz App</h1></p>
- 	<p></p><h1>Register</h1></p>
+ 	<p></p><h2>Quiz App</h2></p>
+ 	<p></p><h3>Registration</h3></p>
  	<p>First Name <%== text_field_tag :first_name, "", size: 40 %></p>
  	<p>Last Name <%== text_field_tag :last_name, "", size: 40 %></p>
     <p>Email Address <%== text_field_tag :email, "", size: 40 %></p>
