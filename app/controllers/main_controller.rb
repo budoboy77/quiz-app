@@ -1,5 +1,9 @@
 class MainController < ApplicationController
 
+	def root_get
+		redirect_to "/login" and return
+	end
+
 	def register_get
 		@title = "Register"
 		render :register and return

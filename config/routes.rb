@@ -1,4 +1,5 @@
 QuizApp::Application.routes.draw do
+  get "/"                       => "main#root_get"
   get "/register"               => "main#register_get"
   post "/register"              => "main#register_post"
   get "/login"                  => "main#login_get"
