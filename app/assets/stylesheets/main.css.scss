@@ -1,3 +1,10 @@
 // Place all the styles related to the main controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.flash-error {
+  background-color: #f2dede;
+  border: 1px #eed3d7 solid;
+  color: #b94a48;
+  padding: 15px;
+}
