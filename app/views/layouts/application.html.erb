@@ -40,7 +40,7 @@
                   <a href="/helppage">Help</a> 
                 </li>
                 <li>
-                  <a href="#">Logout</a> 
+                  <a href="/logout">Logout</a> 
                 </li>
               </ul>
             </div>
@@ -58,7 +58,6 @@
         <%= flash[:success] %>
       </div>
     <% end %>
-    <%== form_tag request.path_info %>
 <%== yield %>
   </body>
 

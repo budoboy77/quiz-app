@@ -1,5 +1,14 @@
 class MainController < ApplicationController
 
+    before_filter except: ["login_get", "login_post", "logout"] do
+    if session[:user_id] != nil
+      user = User.where(id: session[:user_id]).first
+    else
+      flash[:error] = "You must be logged in to see that page."
+      session[:attempted_path] = request.path_info
+      redirect_to "/login" and return
+    end
+    end
 	def root_get
 		redirect_to "/login" and return
 	end
@@ -33,21 +42,29 @@ class MainController < ApplicationController
 
 	def login_post
 		@title = "Login"
-		if User.where(email: params[:email]).first == nil
+		user = User.where(email: params[:email]).first
+		if user == nil
 			flash.now[:error] = "Login failed.  Invalid user name."
 			render :login and return
 		end
-		if User.where(email: params[:email]).first.authenticate(params[:password]) != false
-			redirect_to "/quiz" and return
+		if user.authenticate(params[:password]) != false
+			session[:user_id] = user.id
+			redirect_to "/myquizzes" and return
 		else
 			flash.now[:error] = "Login failed.  Check your user name and password."
 			render :login and return
 		end
 	end
 
-	def quiz_get
-		@title = "quiz"
-		render :quiz and return
+	def logout
+		session.clear
+		flash[:error] = "You have logged out."
+		redirect_to "/login" and return
+	end
+
+	def myquizzes_get
+		@title = "My Quizzes"
+		render :my_quizzes and return
 	end
 
 	def help_get

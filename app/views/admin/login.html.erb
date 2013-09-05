@@ -1,16 +1,16 @@
 <div class="hero-unit">
 	<p></p><h2>Quiz App</h2></p>
  	<p></p><h3>Login</h3></p>
- 	<%== form_tag "/login" do %>
+ 	<%== form_tag "/admin/login" do %>
 	<p>
 		<div "span12 pagination-centered">
-		Enter your email address.<br>
-		<%== text_field_tag :email, "", size: 40 %>
+		Enter your user name.<br>
+		<%== text_field_tag :username, "", size: 40 %>
 		</div>
 	</p>
 	<p>
 		Enter your password.<br>
-		<%== password_field_tag :password, "", size: 40 %>
+		<%== password_field_tag :password %>
 	</p>
 	<p>
 		<%== submit_tag "Log in", :class => 'btn' %>
