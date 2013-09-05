@@ -41,7 +41,7 @@ User.create(first_name: 'Bilbo',
 			password: '54321',
 			password_confirmation: '54321')
 
-Quiz.create(quiz_setup_id: 1,
+Assignment.create(quiz_setup_id: 1,
 			user_id: 1)
 
 QuizSetup.create(name: 'General',

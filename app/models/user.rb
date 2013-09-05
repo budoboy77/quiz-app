@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	validates_uniqueness_of :email
-	has_many :quizzes
+	has_many :assignments
+	has_many :quiz_setups, through: :assignments
 	has_secure_password
 end
