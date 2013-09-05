@@ -1,6 +1,6 @@
 class MainController < ApplicationController
 
-    before_filter except: ["login_get", "login_post", "logout"] do
+    before_filter except: ["root_get", "login_get", "login_post", "logout"] do
     if session[:user_id] != nil
       user = User.where(id: session[:user_id]).first
     else
@@ -64,7 +64,22 @@ class MainController < ApplicationController
 
 	def myquizzes_get
 		@title = "My Quizzes"
+		@my_quizzes = User.find(session[:user_id]).quiz_setups
 		render :my_quizzes and return
+	end
+
+	def quiz_get
+		@quiz = QuizSetup.find(params[:quiz_id])
+		@quiz_quantity1 = @quiz.quantity1
+		@quiz_quantity2 = @quiz.quantity2
+		@quiz_quantity3 = @quiz.quantity3
+		@quiz_quantity4 = @quiz.quantity4
+		@quiz_category1 = @quiz.category1
+		@quiz_category2 = @quiz.category2
+		@quiz_category3 = @quiz.category3
+		@quiz_category4 = @quiz.category4
+		@question1 = Question.where(question_category: @quiz_category1).all(:offset => rand(Question.count))
+		render :quiz and return
 	end
 
 	def help_get

@@ -12,12 +12,12 @@
         <td><%== text_field_tag :quiz_name, "", size: 40 %></td>
         <td>
           <% Category.all.each do |category| %>
-          <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", "", size: 40 %><br>
+          <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", "", size: 5 %><br>
         <% end %>
         </td>
         <td>  
-          <% User.order(:name).all.each do |user| %>
-            <%== check_box_tag "user#{user.id}", "on" %> <%= user.name %><br>
+          <% User.order(:last_name).all.each do |user| %>
+            <%== check_box_tag "user#{user.id}", "on" %> <%= user.first_name %> <%= user.last_name %><br>
           <% end %>
         </td>
         </td>
