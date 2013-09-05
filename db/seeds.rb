@@ -53,3 +53,7 @@ QuizSetup.create(name: 'General',
 Admin.create(username: 'admin',
 			password: 'kungfu',
 			password_confirmation: 'kungfu')
+
+Category.create(name: 'GSS')
+Category.create(name: 'IT')
+Category.create(name: 'Communications')
