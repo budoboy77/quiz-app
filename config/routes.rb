@@ -23,4 +23,6 @@ QuizApp::Application.routes.draw do
   get "/admin/types/:id"        => "admin#types_params_get"
   post "/admin/types/:id"       => "admin#types_params_post"
   get "/admin/quiz-builder"     => "admin#quiz_builder_get"
+  get "/admin/quiz-builder/:id" => "admin#quiz_builder_params_get"
+  post "/admin/quiz-builder/:id" => "admin#quiz_builder_params_post"
 end

@@ -137,7 +137,7 @@ class AdminController < ApplicationController
 		@name = @edit_category.name
 		@title = "Categories - Edit"
 	else
-		@edit_category_id = ""
+		@edit_category_id = "new"
 		@title = "Categories"
 	end
 	@categories = Category.order("id desc").all
@@ -193,10 +193,38 @@ class AdminController < ApplicationController
   end
 
   def quiz_builder_get
+	redirect_to "/admin/quiz-builder/new" and return
+  end
+
+  def quiz_builder_params_get
 	@categories = Category.order(:name).all
+	if params[:id] != "new"
+		@edit_quiz_setup = QuizSetup.find(params[:id])
+		@edit_quiz_setup_id = @edit_quiz_setup.id
+		@edit_quiz_setup_name = @edit_quiz_setup.name
+		@title = "Types - Edit"
+	else
+		@edit_quiz_setup_id = "new"
+		@edit_quiz_setup_name = ""
+		@title = "Types"
+	end
+	@quiz_setups = QuizSetup.order("id desc").all
 	render :quiz_builder and return
   end
 
-  def quiz_builder_post
+  def quiz_builder_params_post
+  	if params[:commit] == "Delete quiz"
+		QuizSetup.destroy(params[:id])
+		redirect_to "/admin/quiz-builder/new" and return
+	end
+	if params[:id] == "new"
+		quiz_setup = QuizSetup.new
+	else
+		quiz_setup = QuizSetup.find(params[:id])
+	end
+	quiz_setup.name	= params[:quiz_name]
+	quiz_setup.save!
+	
+	redirect_to "/admin/quiz-builder/new" and return
   end
 end
