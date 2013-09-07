@@ -1,4 +1,5 @@
 <div class="well">
+  <%== form_tag "/admin/questions/#{@edit_question_id}" do %>
   <table class="table">
     <thead>
       <tr>
@@ -26,6 +27,7 @@
     <%== submit_tag "Update question" %> <%== submit_tag "Delete question" %>
   <% else %>    
     <%== submit_tag "Add question" %>
+  <% end %>
   <% end %>
 </div>
 <div class="well">

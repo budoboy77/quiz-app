@@ -9,6 +9,7 @@
     </thead>
     <tbody>
        <tr>
+        <%== form_tag "/admin/quiz-builder" do %>
         <td><%== text_field_tag :quiz_name, "", size: 40 %></td>
         <td>
           <% Category.all.each do |category| %>
@@ -20,7 +21,7 @@
             <%== check_box_tag "user#{user.id}", "on" %> <%= user.first_name %> <%= user.last_name %><br>
           <% end %>
         </td>
-        </td>
+        <% end %>
       </tr>
   </table>
 </div>

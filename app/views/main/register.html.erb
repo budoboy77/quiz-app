@@ -1,6 +1,7 @@
  <div class="hero-unit">
  	<p></p><h2>Quiz App</h2></p>
  	<p></p><h3>Registration</h3></p>
+ 	<%== form_tag "/register" do %>
  	<p>First Name: <%== text_field_tag :first_name, "", size: 40 %></p>
  	<p>Last Name: <%== text_field_tag :last_name, "", size: 40 %></p>
     <p>Email Address: <%== text_field_tag :email, "", size: 40 %></p>
@@ -8,4 +9,5 @@
     <p>Password Confirmation: <%== password_field_tag(:password_confirmation) %></p>
     <p><b>After you complete registration, you will be redirected to the login page.</b></p>
     <p><%== submit_tag "Register", :class => "btn btn-primary" %></p>
+    <% end %>
   </div>
