@@ -1,5 +1,5 @@
 <div class="well">
-   <%== form_tag "/admin/quiz-builder" do %>
+   <%== form_tag "/admin/quiz-builder/#{@edit_quiz_setup_id}" do %>
   <table class="table">
     <thead>
       <tr>
@@ -10,7 +10,7 @@
     </thead>
     <tbody>
        <tr>
-        <td><%== text_field_tag :quiz_name, "", size: 40 %></td>
+        <td><%== text_field_tag :quiz_name, @edit_quiz_setup_name, size: 40 %></td>
         <td>
           <% Category.all.each do |category| %>
           <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", "", size: 5 %><br>
@@ -23,7 +23,12 @@
         </td>
       </tr>
   </table>
+  <% if params[:id] != "new" %>
+    <%== submit_tag "Update quiz" %> <%== submit_tag "Delete quiz" %>
+  <% else %>    
+    <%== submit_tag "Add quiz" %>
   <% end %>
+  <% end %> <!-- This end is for the form tag. -->
 </div>
 <div class="well">
   <table class="table">
@@ -36,13 +41,15 @@
       </tr>
     </thead>
     <tbody>
-      <% QuizSetup.all.each do |quizsetup| %>
+      <% @quiz_setups.each do |quizsetup| %>
        <tr>
         <td><a class=btn href="/admin/quiz-builder/<%= quizsetup.id %>">Edit</a></td>
         <td><%= quizsetup.name %></td>
+        <td></td>
         <td><% quizsetup.users.all.each do |user| %>
-        <%= user.first_name %> <%= user.last_name %></td>
+        <%= user.first_name %> <%= user.last_name %><br>
         <% end %>
+        </td>
       </tr>
       <% end %>
   </table>
