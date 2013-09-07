@@ -1,4 +1,5 @@
 <div class="well">
+   <%== form_tag "/admin/quiz-builder" do %>
   <table class="table">
     <thead>
       <tr>
@@ -9,7 +10,6 @@
     </thead>
     <tbody>
        <tr>
-        <%== form_tag "/admin/quiz-builder" do %>
         <td><%== text_field_tag :quiz_name, "", size: 40 %></td>
         <td>
           <% Category.all.each do |category| %>
@@ -18,10 +18,32 @@
         </td>
         <td>  
           <% User.order(:last_name).all.each do |user| %>
-            <%== check_box_tag "user#{user.id}", "on" %> <%= user.first_name %> <%= user.last_name %><br>
+            <%== check_box_tag "user.id", "on" %> <%= user.first_name %> <%= user.last_name %><br>
           <% end %>
         </td>
+      </tr>
+  </table>
+  <% end %>
+</div>
+<div class="well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Quiz Name</th>
+        <th>Categories and qtys</th>
+        <th>Users</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% QuizSetup.all.each do |quizsetup| %>
+       <tr>
+        <td><a class=btn href="/admin/quiz-builder/<%= quizsetup.id %>">Edit</a></td>
+        <td><%= quizsetup.name %></td>
+        <td><% quizsetup.users.all.each do |user| %>
+        <%= user.first_name %> <%= user.last_name %></td>
         <% end %>
       </tr>
+      <% end %>
   </table>
 </div>

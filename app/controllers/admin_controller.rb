@@ -57,8 +57,8 @@ class AdminController < ApplicationController
 	if params[:id] != "new"
 		@edit_question = Question.find(params[:id])
 		@edit_question_id = @edit_question.id
-		@category = @edit_question.question_category
-		@type = @edit_question.question_type
+		@category = @edit_question.category.name
+		@type = @edit_question.type.name
 		@text = @edit_question.question_text
 		@choice1 = @edit_question.choice1
 		@choice2 = @edit_question.choice2
@@ -95,18 +95,18 @@ class AdminController < ApplicationController
 	if params[:new_category] != ""
 		category = Category.new
 		category.name = params[:new_category]
-		question.question_category = params[:new_category]
 		category.save!
+		question.category_id = Category.where(name: params[:new_category]).first.id
 	else
-		question.question_category = params[:category]
+		question.category_id = Category.where(name: params[:category]).first.id
 	end
 	if params[:new_type] != ""
 		type = Type.new
 		type.name = params[:new_type]
-		question.question_type 	= params[:new_type]
 		type.save!
+		question.type_id = Type.where(name: params[:new_type]).first.id
 	else
-		question.question_type 	= params[:type]
+		question.type_id = Type.where(name: params[:type]).first.id
 	end
 	question.question_text 	= params[:text]
 	question.choice1		= params[:choice1]
@@ -132,11 +132,12 @@ class AdminController < ApplicationController
 
   def categories_params_get
 	if params[:id] != "new"
-		edit_category = Category.find(params[:id])
-		@name = edit_category.name
+		@edit_category = Category.find(params[:id])
+		@edit_category_id = @edit_category.id
+		@name = @edit_category.name
 		@title = "Categories - Edit"
 	else
-		@edit_category_name = ""
+		@edit_category_id = ""
 		@title = "Categories"
 	end
 	@categories = Category.order("id desc").all
@@ -197,5 +198,5 @@ class AdminController < ApplicationController
   end
 
   def quiz_builder_post
-  	
+  end
 end

@@ -49,8 +49,8 @@
     <% @questions.each do |question| %>
     <tr>
       <td><a class=btn href="/admin/questions/<%= question.id %>">Edit</a></td>
-      <td><%= question.question_category %></td>
-      <td><%= question.question_type %></td>
+      <td><%= question.category.name %></td>
+      <td><%= question.type.name %></td>
       <td><%= question.question_text %></td>
       <td><%= question.choice1 %></td>
       <td><%= question.choice2 %></td>
