@@ -55,16 +55,18 @@ class AdminController < ApplicationController
 
   def questions_params_get
 	if params[:id] != "new"
-		edit_question = Question.find(params[:id])
-		@category = edit_question.question_category
-		@type = edit_question.question_type
-		@text = edit_question.question_text
-		@choice1 = edit_question.choice1
-		@choice2 = edit_question.choice2
-		@choice3 = edit_question.choice3
-		@choice4 = edit_question.choice4
+		@edit_question = Question.find(params[:id])
+		@edit_question_id = @edit_question.id
+		@category = @edit_question.question_category
+		@type = @edit_question.question_type
+		@text = @edit_question.question_text
+		@choice1 = @edit_question.choice1
+		@choice2 = @edit_question.choice2
+		@choice3 = @edit_question.choice3
+		@choice4 = @edit_question.choice4
 		@title = "Questions - Edit"
 	else
+		@edit_question_id = "new"
 		@category = ""
 		@type = ""
 		@text = ""
@@ -81,17 +83,6 @@ class AdminController < ApplicationController
   end
 
   def questions_params_post
-	# if params[:commit] == "Search"
-	#  	@questions = Question.where("question_text ilike ?", "%#{params[:criteria]}%").all
-	#  	@category = ""
-	# 	@type = ""
-	# 	@text = ""
-	# 	@choice1 = ""
-	# 	@choice2 = ""
-	# 	@choice3 = ""
-	# 	@choice4 = ""
-	#  	render :questions and return
-	# end
 	if params[:commit] == "Delete question"
 		Question.destroy(params[:id])
 		redirect_to "/admin/questions/new" and return
@@ -204,4 +195,7 @@ class AdminController < ApplicationController
 	@categories = Category.order(:name).all
 	render :quiz_builder and return
   end
+
+  def quiz_builder_post
+  	
 end
