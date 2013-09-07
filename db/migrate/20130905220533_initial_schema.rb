@@ -18,15 +18,12 @@ class InitialSchema < ActiveRecord::Migration
 
     create_table :quiz_setups do |t|
       t.string  :name
-      t.integer :quantity1
-      t.integer :quantity2
-      t.integer :quantity3
-      t.integer :quantity4
-      t.string  :category1
-      t.string  :category2
-      t.string  :category3
-      t.string  :category4
-    end 
+    end
+
+    create_table :questions_quiz_setups, id: false do |t|
+      t.integer :question_id
+      t.integer :quiz_setup_id
+    end
       
     create_table :users do |t|
       t.string  :first_name

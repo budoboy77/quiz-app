@@ -5,29 +5,36 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Question.create(question_category: 'IT',
+question1 = Question.create(question_category: 'IT',
 				question_type:  'true/false',
 				question_text:  'Computers are stupid.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-Question.create(question_category: 'IT',
+question2 = Question.create(question_category: 'IT',
 				question_type:  'true/false',
 				question_text:  'Bryan is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-Question.create(question_category: 'GSS',
+question3 = Question.create(question_category: 'GSS',
 				question_type:  'true/false',
 				question_text:  'Insurance is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-Question.create(question_category: 'GSS',
+question4 = Question.create(question_category: 'GSS',
 				question_type:  'true/false',
 				question_text:  'Tim is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
+
+quiz_setup1 = QuizSetup.create(name: 'General')
+
+question1.quiz_setups << quiz_setup1
+question2.quiz_setups << quiz_setup1
+question3.quiz_setups << quiz_setup1
+question4.quiz_setups << quiz_setup1
 
 User.create(first_name: 'Bryan',
 			last_name: 'White',
@@ -44,12 +51,6 @@ User.create(first_name: 'Bilbo',
 Assignment.create(quiz_setup_id: 1,
 			user_id: 1)
 
-QuizSetup.create(name: 'General',
-				quantity1: 2,
-				category1: 'IT',
-				quantity2: 2,
-				category2: 'GSS')
-
 Admin.create(username: 'admin',
 			password: 'kungfu',
 			password_confirmation: 'kungfu')
@@ -57,3 +58,6 @@ Admin.create(username: 'admin',
 Category.create(name: 'GSS')
 Category.create(name: 'IT')
 Category.create(name: 'Communications')
+
+Type.create(name: "Multiple Choice")
+Type.create(name: "True/False")

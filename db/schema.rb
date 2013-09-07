@@ -41,16 +41,13 @@ ActiveRecord::Schema.define(version: 20130905220533) do
     t.string "correct_answer"
   end
 
+  create_table "questions_quiz_setups", id: false, force: true do |t|
+    t.integer "question_id"
+    t.integer "quiz_setup_id"
+  end
+
   create_table "quiz_setups", force: true do |t|
-    t.string  "name"
-    t.integer "quantity1"
-    t.integer "quantity2"
-    t.integer "quantity3"
-    t.integer "quantity4"
-    t.string  "category1"
-    t.string  "category2"
-    t.string  "category3"
-    t.string  "category4"
+    t.string "name"
   end
 
   create_table "types", force: true do |t|
