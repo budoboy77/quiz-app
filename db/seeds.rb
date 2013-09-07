@@ -5,26 +5,26 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-question1 = Question.create(question_category: 'IT',
-				question_type:  'true/false',
+question1 = Question.create(category_id: 2,
+				type_id:  2,
 				question_text:  'Computers are stupid.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question2 = Question.create(question_category: 'IT',
-				question_type:  'true/false',
+question2 = Question.create(category_id: 2,
+				type_id:  2,
 				question_text:  'Bryan is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question3 = Question.create(question_category: 'GSS',
-				question_type:  'true/false',
+question3 = Question.create(category_id: 1,
+				type_id:  2,
 				question_text:  'Insurance is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question4 = Question.create(question_category: 'GSS',
-				question_type:  'true/false',
+question4 = Question.create(category_id: 1,
+				type_id:  2,
 				question_text:  'Tim is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
@@ -36,28 +36,30 @@ question2.quiz_setups << quiz_setup1
 question3.quiz_setups << quiz_setup1
 question4.quiz_setups << quiz_setup1
 
-User.create(first_name: 'Bryan',
+user1 = User.create(first_name: 'Bryan',
 			last_name: 'White',
 			email: 'bew@bryanewhite.com',
 			password: '12345',
 			password_confirmation: '12345')
 
-User.create(first_name: 'Bilbo',
+user2 = User.create(first_name: 'Bilbo',
 			last_name: 'Baggins',
 			email: 'bilbo@bagend.com',
 			password: '54321',
 			password_confirmation: '54321')
 
-Assignment.create(quiz_setup_id: 1,
-			user_id: 1)
+assignment1 = Assignment.create(quiz_setup_id: quiz_setup1.id,
+			user_id: user1.id)
+assignment2 = Assignment.create(quiz_setup_id: quiz_setup1.id,
+			user_id: user2.id)
 
 Admin.create(username: 'admin',
 			password: 'kungfu',
 			password_confirmation: 'kungfu')
 
-Category.create(name: 'GSS')
-Category.create(name: 'IT')
-Category.create(name: 'Communications')
+category1 = Category.create(name: 'GSS')
+category2 = Category.create(name: 'IT')
+category3 = Category.create(name: 'Communications')
 
 Type.create(name: "Multiple Choice")
 Type.create(name: "True/False")

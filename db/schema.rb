@@ -31,14 +31,14 @@ ActiveRecord::Schema.define(version: 20130905220533) do
   end
 
   create_table "questions", force: true do |t|
-    t.string "question_category"
-    t.string "question_type"
-    t.text   "question_text"
-    t.string "choice1"
-    t.string "choice2"
-    t.string "choice3"
-    t.string "choice4"
-    t.string "correct_answer"
+    t.integer "category_id"
+    t.integer "type_id"
+    t.text    "question_text"
+    t.string  "choice1"
+    t.string  "choice2"
+    t.string  "choice3"
+    t.string  "choice4"
+    t.string  "correct_answer"
   end
 
   create_table "questions_quiz_setups", id: false, force: true do |t|

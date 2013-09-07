@@ -6,8 +6,8 @@ class InitialSchema < ActiveRecord::Migration
     end
 
   	create_table :questions do |t|
-      t.string  :question_category
-      t.string  :question_type
+      t.integer :category_id
+      t.integer :type_id
       t.text    :question_text
 	    t.string  :choice1
       t.string  :choice2
@@ -44,5 +44,6 @@ class InitialSchema < ActiveRecord::Migration
     create_table  :types do |t|
       t.string    :name
     end
+
   end
 end
