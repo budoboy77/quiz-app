@@ -20,7 +20,7 @@ class InitialSchema < ActiveRecord::Migration
       t.string  :name
     end
 
-    create_table :questions_quiz_setups, id: false do |t|
+    create_table :questionsquizsetups do |t|
       t.integer :question_id
       t.integer :quiz_setup_id
     end

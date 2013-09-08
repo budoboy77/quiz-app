@@ -224,7 +224,23 @@ class AdminController < ApplicationController
 	end
 	quiz_setup.name	= params[:quiz_name]
 	quiz_setup.save!
-	
+	@edit_quiz_setup = QuizSetup.where(name: quiz_setup.name).first
+	question_array = []
+	Category.all.each do |category|
+	  category1 = Category.where(name: params["category#{category.id}"]).first
+      if category1 != nil
+		  Question.where(category_id: category1.id).limit(params["qty#{category.id}"]).order("RANDOM()").each do |question|
+		    question_array << question.id
+	  	  end
+	  end
+	end
+	new_quiz = Questionsquizsetup.new
+	question_array.each do |question_element|
+		new_quiz.quiz_setup_id = @edit_quiz_setup.id
+		new_quiz.question_id   = question_element
+		new_quiz.save!
+	end
+	raise Questionsquizsetup.find(@edit_quiz_setup.id).all.inspect
 	redirect_to "/admin/quiz-builder/new" and return
   end
 end

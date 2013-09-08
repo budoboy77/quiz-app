@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20130905220533) do
     t.string  "correct_answer"
   end
 
-  create_table "questions_quiz_setups", id: false, force: true do |t|
+  create_table "questionsquizsetups", force: true do |t|
     t.integer "question_id"
     t.integer "quiz_setup_id"
   end

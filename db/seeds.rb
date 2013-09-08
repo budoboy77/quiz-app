@@ -29,6 +29,12 @@ question4 = Question.create(category_id: 1,
 				choice1:        'True', 
 				correct_answer: 'True')
 
+question5 = Question.create(category_id: 3,
+				type_id:  2,
+				question_text:  'Andy is cool.',
+				choice1:        'True', 
+				correct_answer: 'True')
+
 quiz_setup1 = QuizSetup.create(name: 'General')
 
 question1.quiz_setups << quiz_setup1
