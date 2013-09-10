@@ -5,42 +5,46 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-question1 = Question.create(category_id: 2,
+category1 = Category.create(name: 'GSS')
+category2 = Category.create(name: 'IT')
+category3 = Category.create(name: 'Communications')
+
+question1 = Question.create(category_id: category2.id,
 				type_id:  2,
 				question_text:  'Computers are stupid.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question2 = Question.create(category_id: 2,
+question2 = Question.create(category_id: category2.id,
 				type_id:  2,
 				question_text:  'Bryan is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question3 = Question.create(category_id: 1,
+question3 = Question.create(category_id: category1.id,
 				type_id:  2,
 				question_text:  'Insurance is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question4 = Question.create(category_id: 1,
+question4 = Question.create(category_id: category1.id,
 				type_id:  2,
 				question_text:  'Tim is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-question5 = Question.create(category_id: 3,
+question5 = Question.create(category_id: category3.id,
 				type_id:  2,
 				question_text:  'Andy is cool.',
 				choice1:        'True', 
 				correct_answer: 'True')
 
-quiz_setup1 = QuizSetup.create(name: 'General')
+# quiz_setup1 = QuizSetup.create(name: 'General')
 
-question1.quiz_setups << quiz_setup1
-question2.quiz_setups << quiz_setup1
-question3.quiz_setups << quiz_setup1
-question4.quiz_setups << quiz_setup1
+# question1.quiz_setups << quiz_setup1
+# question2.quiz_setups << quiz_setup1
+# question3.quiz_setups << quiz_setup1
+# question4.quiz_setups << quiz_setup1
 
 user1 = User.create(first_name: 'Bryan',
 			last_name: 'White',
@@ -54,18 +58,12 @@ user2 = User.create(first_name: 'Bilbo',
 			password: '54321',
 			password_confirmation: '54321')
 
-assignment1 = Assignment.create(quiz_setup_id: quiz_setup1.id,
-			user_id: user1.id)
-assignment2 = Assignment.create(quiz_setup_id: quiz_setup1.id,
-			user_id: user2.id)
+# assignment1 = Assignment.create(quiz_setup_id: quiz_setup1.id, user_id: user1.id)
+# assignment2 = Assignment.create(quiz_setup_id: quiz_setup1.id, user_id: user2.id)
 
 Admin.create(username: 'admin',
 			password: 'kungfu',
 			password_confirmation: 'kungfu')
-
-category1 = Category.create(name: 'GSS')
-category2 = Category.create(name: 'IT')
-category3 = Category.create(name: 'Communications')
 
 Type.create(name: "Multiple Choice")
 Type.create(name: "True/False")
