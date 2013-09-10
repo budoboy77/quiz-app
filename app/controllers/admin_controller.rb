@@ -166,11 +166,12 @@ class AdminController < ApplicationController
 
   def types_params_get
 	if params[:id] != "new"
-		edit_type = Type.find(params[:id])
-		@name = edit_type.name
+		@edit_type = Type.find(params[:id])
+		@edit_type_id = @edit_type.id
+		@name = @edit_type.name
 		@title = "Types - Edit"
 	else
-		@edit_type_name = ""
+		@edit_type_id = "new"
 		@title = "Types"
 	end
 	@types = Type.order("id desc").all
@@ -202,11 +203,22 @@ class AdminController < ApplicationController
 		@edit_quiz_setup = QuizSetup.find(params[:id])
 		@edit_quiz_setup_id = @edit_quiz_setup.id
 		@edit_quiz_setup_name = @edit_quiz_setup.name
-		@title = "Types - Edit"
-	else
+		@title = "Quiz Builder - Edit"
+		categories_array = []
+        QuizSetup.find(params[:id]).questions.each do |question|
+          categories_array << question.category.name
+        end
+        @categories_hash = categories_array.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
+        @users_array = []
+        QuizSetup.find(params[:id]).users.each do |user|
+          @users_array << user.id
+        end
+        else
 		@edit_quiz_setup_id = "new"
 		@edit_quiz_setup_name = ""
-		@title = "Types"
+		@categories_hash = {}
+		@title = "Quiz Builder"
+		@users_array = []
 	end
 	@quiz_setups = QuizSetup.order("id desc").all
 	render :quiz_builder and return
@@ -220,6 +232,8 @@ class AdminController < ApplicationController
 	if params[:id] == "new"
 		quiz_setup = QuizSetup.new
 	else
+		QuizSetup.find(params[:id]).questionsquizsetups.delete_all
+		QuizSetup.find(params[:id]).assignments.delete_all
 		quiz_setup = QuizSetup.find(params[:id])
 	end
 	quiz_setup.name	= params[:quiz_name]
@@ -234,13 +248,24 @@ class AdminController < ApplicationController
 	  	  end
 	  end
 	end
-	new_quiz = Questionsquizsetup.new
 	question_array.each do |question_element|
-		new_quiz.quiz_setup_id = @edit_quiz_setup.id
-		new_quiz.question_id   = question_element
-		new_quiz.save!
+		new_questions_to_quiz_link = Questionsquizsetup.new
+		new_questions_to_quiz_link.quiz_setup_id = @edit_quiz_setup.id
+		new_questions_to_quiz_link.question_id   = question_element
+		new_questions_to_quiz_link.save!
 	end
-	raise Questionsquizsetup.find(@edit_quiz_setup.id).all.inspect
+	assigned_user_array = []
+	User.all.each do |user|
+	  if params["user#{user.id}"] == "on"
+	  	assigned_user_array << user.id
+	  end
+	end
+	assigned_user_array.each do |assignment|
+		new_assignment = Assignment.new
+		new_assignment.quiz_setup_id = @edit_quiz_setup.id
+		new_assignment.user_id   = assignment
+		new_assignment.save!
+	end
 	redirect_to "/admin/quiz-builder/new" and return
   end
 end

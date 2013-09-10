@@ -13,12 +13,23 @@
         <td><%== text_field_tag :quiz_name, @edit_quiz_setup_name, size: 40 %></td>
         <td>
           <% Category.all.each do |category| %>
-          <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", "", size: 5 %><br>
+          <% @category_name = @categories_hash.keys.select { |key, value| key.to_s.match(category.name)} %>
+          <% @category_name_string = @category_name.join("") %>
+          <% if @categories_hash.has_key?(@category_name_string) %>
+            <% @category_qty = @categories_hash.fetch(@category_name_string) %>
+          <% else %>
+            <% @category_qty = 0 %>
+          <% end %>
+          <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name, @category_name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", @category_qty, size: 5 %><br>
         <% end %>
         </td>
         <td>  
           <% User.order(:last_name).all.each do |user| %>
-            <%== check_box_tag "user.id", "on" %> <%= user.first_name %> <%= user.last_name %><br>
+            <% if @users_array.include? user.id %>
+              <%== check_box_tag "user#{user.id}", "on", true %> <%= user.first_name %> <%= user.last_name %><br>
+            <% else %>
+              <%== check_box_tag "user#{user.id}", "on" %> <%= user.first_name %> <%= user.last_name %><br>
+            <% end %>
           <% end %>
         </td>
       </tr>
@@ -41,14 +52,24 @@
       </tr>
     </thead>
     <tbody>
-      <% @quiz_setups.each do |quizsetup| %>
+      <% QuizSetup.all.each do |quizsetup| %>
        <tr>
         <td><a class=btn href="/admin/quiz-builder/<%= quizsetup.id %>">Edit</a></td>
         <td><%= quizsetup.name %></td>
-        <td></td>
-        <td><% quizsetup.users.all.each do |user| %>
-        <%= user.first_name %> <%= user.last_name %><br>
-        <% end %>
+          <% @categories_array = [] %>
+          <% quizsetup.questions.each do |question| %>
+            <% @categories_array << question.category.name %>
+          <% end %>
+          <% @categories_hash = @categories_array.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total} %>
+          <td>
+          <% @categories_hash.each do |key, value| %>
+            <%= "#{key.to_s} #{value.to_s}" %><br>
+          <% end %>
+          </td>
+        <td>
+          <% quizsetup.users.all.each do |user| %>
+            <%= user.first_name %> <%= user.last_name %><br>
+          <% end %>
         </td>
       </tr>
       <% end %>
