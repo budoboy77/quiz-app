@@ -62,7 +62,7 @@ user2 = User.create(first_name: 'Bilbo',
 # assignment2 = Assignment.create(quiz_setup_id: quiz_setup1.id, user_id: user2.id)
 
 Admin.create(username: 'admin',
-			password: 'kungfu',
+			password: '1629',
 			password_confirmation: '1629')
 
 Type.create(name: "Multiple Choice")
