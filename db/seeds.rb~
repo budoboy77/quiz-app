@@ -63,7 +63,7 @@ user2 = User.create(first_name: 'Bilbo',
 
 Admin.create(username: 'admin',
 			password: 'kungfu',
-			password_confirmation: '1629')
+			password_confirmation: 'kungfu')
 
 Type.create(name: "Multiple Choice")
 Type.create(name: "True/False")
