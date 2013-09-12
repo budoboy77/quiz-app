@@ -45,5 +45,12 @@ class InitialSchema < ActiveRecord::Migration
       t.string    :name
     end
 
+    create_table  :quiz_results do |t|
+      t.integer   :quiz_setup_id
+      t.integer   :question_id
+      t.integer   :user_id
+      t.string    :user_answer
+    end
+
   end
 end

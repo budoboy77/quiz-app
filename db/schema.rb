@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 20130905220533) do
     t.integer "quiz_setup_id"
   end
 
+  create_table "quiz_results", force: true do |t|
+    t.integer "quiz_setup_id"
+    t.integer "question_id"
+    t.integer "user_id"
+    t.string  "user_answer"
+  end
+
   create_table "quiz_setups", force: true do |t|
     t.string "name"
   end
