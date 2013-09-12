@@ -1,6 +1,6 @@
 class MainController < ApplicationController
 
-    before_filter except: ["root_get", "login_get", "login_post", "logout"] do
+    before_filter except: ["root_get", "login_get", "login_post", "logout", "register_get"] do
     if session[:user_id] != nil
       user = User.where(id: session[:user_id]).first
     else
@@ -70,16 +70,20 @@ class MainController < ApplicationController
 
 	def quiz_get
 		@quiz = QuizSetup.find(params[:quiz_id])
-		@quiz_quantity1 = @quiz.quantity1
-		@quiz_quantity2 = @quiz.quantity2
-		@quiz_quantity3 = @quiz.quantity3
-		@quiz_quantity4 = @quiz.quantity4
-		@quiz_category1 = @quiz.category1
-		@quiz_category2 = @quiz.category2
-		@quiz_category3 = @quiz.category3
-		@quiz_category4 = @quiz.category4
-		@question1 = Question.where(question_category: @quiz_category1).all(:offset => rand(Question.count))
+		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
 		render :quiz and return
+	end
+
+	def quiz_post
+		@quiz = QuizSetup.find(params[:quiz_id])
+		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
+		@questions.each do |question|
+			quiz_result = QuizResult.new
+			quiz_result.quiz_setup_id = @quiz.id
+			quiz_result.question_id = params["question#{question.id}"].slice
+			quiz_result.answer = params["question#{question.id}"]
+		end
+		
 	end
 
 	def help_get

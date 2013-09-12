@@ -1,56 +1,27 @@
 <div class="container">
       <br>
-      <div class="well">
-        <h4>What company provides health insurance for ELIC?</h4>
-        <a class="btn" href="/clicked">Integra</a>
-        <a class="btn" href="/clicked">Humana</a>
-        <a class="btn" href="/clicked">Cigna</a>
-        <a class="btn" href="/clicked">None of these.</a> 
-      </div>
-      <div class="well">
-        <h4>Which of these are provided by ELIC IT to help with accessing blocked websites?</h4>
-        <a class="btn" href="/clicked">Tunnel</a>
-        <a class="btn" href="/clicked">VPN</a>
-        <a class="btn" href="/clicked">Wishful Thinking</a>
-        <a class="btn" href="/clicked">A long network cord stretching to the USA.</a> 
-      </div>
-      <div class="well">
-        <h4>What year did ELIC first send teachers to China?</h4>
-        <a class="btn" href="/clicked">1942</a>
-        <a class="btn" href="/clicked">1991</a>
-        <a class="btn" href="/clicked">2012</a>
-        <a class="btn" href="/clicked">1972</a> 
-      </div>
-      <div class="well">
-        <h4>Who is the current president of ELIC?</h4>
-        <a class="btn" href="/clicked">Bill Gates</a>
-        <a class="btn" href="/clicked">Bozo the Clown</a>
-        <a class="btn" href="/clicked">Tim Davis</a>
-        <a class="btn" href="/clicked">Leonardo Davinci</a> 
-      </div>
-      <div class="pagination pagination-centered">
-        <ul>
-          <li>
-            <a href="#">Prev</a>
-          </li>
-          <li>
-            <a href="#">1</a>
-          </li>
-          <li>
-            <a href="#">2</a>
-          </li>
-          <li>
-            <a href="#">3</a>
-          </li>
-          <li>
-            <a href="#">4</a>
-          </li>
-            <li>
-            <a href="#">5</a>
-          </li>
-          <li>
-            <a href="#">Next</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <%== form_tag "/quiz/#{@quiz.id}" do %>
+      <% @questions.find(:all, :order => :id, :limit => 5).each do |question| %>
+        <div class="well">
+          <h4><%= question.question_text %></h4>
+          <% if question.type.name == "True/False" %>
+            <%== radio_button_tag "question#{question.id}", "True" %>True<br>
+            <%== radio_button_tag "question#{question.id}", "False" %>False<br>
+          <% else %>
+            <% if question.choice1 != nil and question.choice1 != "" %>
+              <%== radio_button_tag "question#{question.id}", "question.choice1" %><%= question.choice1 %><br>
+            <% end %>
+            <% if question.choice2 != nil and question.choice2 != "" %>
+              <%== radio_button_tag "question#{question.id}", "question.choice2" %><%= question.choice2 %><br>
+            <% end %>
+            <% if question.choice3 != nil and question.choice3 != "" %>
+              <%== radio_button_tag "question#{question.id}", "question.choice3" %><%= question.choice3 %><br>
+            <% end %>
+            <% if question.choice4 != nil and question.choice4 != "" %>
+              <%== radio_button_tag "question#{question.id}", "question.choice4" %><%= question.choice4 %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= submit_tag "Next" %>
+    <% end %>  <!-- This is for the form tag. -->

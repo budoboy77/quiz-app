@@ -7,6 +7,7 @@ QuizApp::Application.routes.draw do
   get "/logout"                 => "main#logout"
   get "/myquizzes"              => "main#myquizzes_get"
   get "/quiz/:quiz_id"          => "main#quiz_get"
+  post "/quiz/:quiz_id"         => "main#quiz_post"
   get "/help"                   => "main#help_get"
   get "/clicked"                => "main#clicked_get"
   get "/admin"                  => "admin#admin_get"
