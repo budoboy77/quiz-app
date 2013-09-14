@@ -69,9 +69,20 @@ class MainController < ApplicationController
 	end
 
 	def quiz_get
-		@quiz = QuizSetup.find(params[:quiz_id])
-		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
+		@user = User.find(session[:user_id])
+		@quiz = QuizSetup.where(id: params[:quiz_id]).first
+		if @quiz == nil
+			redirect_to "/myquizzes" and return
+		end
+		@quiz_setup = @user.assignments.where(quiz_setup_id: @quiz.id).first
+		if @quiz_setup == nil
+			redirect_to "/myquizzes" and return
+		end
+		@questions = @user.quiz_setups.find(@quiz.id).questions
 		@quiz_results = QuizResult.where(quiz_setup_id: @quiz.id).where(user_id: session[:user_id])
+		if User.find(session[:user_id]).assignments.where(quiz_setup_id: @quiz.id).first.score != nil
+			redirect_to "/myquizzes" and return
+		end
 		@unanswered_questions = []
 		@questions.each do |question|
 			if @quiz_results.where(question_id: question.id).first == nil
@@ -85,6 +96,7 @@ class MainController < ApplicationController
 	def quiz_post
 		@quiz = QuizSetup.find(params[:quiz_id])
 		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
+		@quiz_results = QuizResult.where(quiz_setup_id: @quiz.id).where(user_id: session[:user_id])
 		session[:unanswered_questions][0..3].each do |question_id|
 			if params["question#{question_id}"] == nil
 				flash.now[:error] = "Please answer all the questions."
@@ -96,9 +108,20 @@ class MainController < ApplicationController
 				quiz_result.user_answer = params["question#{question_id}"]
 				quiz_result.user_id = session[:user_id]
 				quiz_result.save!
+				if params["question#{question_id}"] == @questions.find(question_id).correct_answer
+					quiz_result.is_correct = true
+				else
+					quiz_result.is_correct = false
+				end
+				quiz_result.save!
 			end
 		end
 		if params[:commit] == "Finish"
+		  @calculate_score = @quiz_results.where(is_correct: true).count.to_f / @questions.count.to_f
+		  @score = sprintf( "%0.f", @calculate_score * 100)
+		  save_score = User.find(session[:user_id]).assignments.where(quiz_setup_id: @quiz.id).first
+		  save_score.score = @score.to_i
+		  save_score.save!
 		  flash[:success] = "Thank you for completing the quiz."
 		  redirect_to "/myquizzes" and return
 		end
