@@ -33,15 +33,27 @@
             <a class="brand" href="#">Quiz App - <%= @title %></a>
             <div class="navbar-content">
               <ul class="nav  pull-right">
-                <li class="active">
-                  <a href="#">Home</a> 
-                </li>
-                <li>
-                  <a href="/helppage">Help</a> 
-                </li>
-                <li>
-                  <a href="/logout">Logout</a> 
-                </li>
+                <% if session[:admin_id] %>
+                  <li>
+                    <a href="/admin/questions">Questions</a> 
+                  </li>
+                  <li>
+                    <a href="/admin/categories">Categories</a> 
+                  </li>
+                  <li>
+                    <a href="/admin/users">Users</a> 
+                  </li>
+                  <li>
+                    <a href="/logout">Logout</a> 
+                  </li>
+                <% else %>
+                  <li>
+                    <a href="/helppage">Help</a> 
+                  </li>
+                  <li>
+                    <a href="/logout">Logout</a> 
+                  </li>
+                <% end %>
               </ul>
             </div>
           </div>
