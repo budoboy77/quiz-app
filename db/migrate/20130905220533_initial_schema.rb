@@ -35,7 +35,7 @@ class InitialSchema < ActiveRecord::Migration
     create_table :assignments do |t|
       t.integer  :user_id
       t.integer  :quiz_setup_id
-      t.float    :score
+      t.integer  :score
     end
     
     create_table  :categories do |t|
@@ -51,6 +51,7 @@ class InitialSchema < ActiveRecord::Migration
       t.integer   :question_id
       t.integer   :user_id
       t.string    :user_answer
+      t.boolean   :is_correct
     end
 
   end

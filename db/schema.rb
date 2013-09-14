@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20130905220533) do
   create_table "assignments", force: true do |t|
     t.integer "user_id"
     t.integer "quiz_setup_id"
-    t.float   "score"
+    t.integer "score"
   end
 
   create_table "categories", force: true do |t|
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20130905220533) do
     t.integer "question_id"
     t.integer "user_id"
     t.string  "user_answer"
+    t.boolean "is_correct"
   end
 
   create_table "quiz_setups", force: true do |t|
