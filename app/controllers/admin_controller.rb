@@ -64,6 +64,15 @@ class AdminController < ApplicationController
 		@choice2 = @edit_question.choice2
 		@choice3 = @edit_question.choice3
 		@choice4 = @edit_question.choice4
+		if @choice1 == @edit_question.correct_answer
+			@answer1 = true
+		elsif @choice2 == @edit_question.correct_answer
+			@answer2 = true
+		elsif @choice3 == @edit_question.correct_answer
+			@answer3 = true
+		elsif @choice4 == @edit_question.correct_answer
+			@answer4 = true
+		end
 		@title = "Questions - Edit"
 	else
 		@edit_question_id = "new"
@@ -100,14 +109,7 @@ class AdminController < ApplicationController
 	else
 		question.category_id = Category.where(name: params[:category]).first.id
 	end
-	if params[:new_type] != ""
-		type = Type.new
-		type.name = params[:new_type]
-		type.save!
-		question.type_id = Type.where(name: params[:new_type]).first.id
-	else
-		question.type_id = Type.where(name: params[:type]).first.id
-	end
+	question.type_id = Type.where(name: params[:type]).first.id
 	question.question_text 	= params[:text]
 	question.choice1		= params[:choice1]
 	question.choice2		= params[:choice2]
@@ -160,38 +162,38 @@ class AdminController < ApplicationController
 	redirect_to "/admin/categories/new" and return
   end
 
-  def types_get
-	redirect_to "/admin/types/new" and return
-  end
+ #  def types_get
+	# redirect_to "/admin/types/new" and return
+ #  end
 
-  def types_params_get
-	if params[:id] != "new"
-		@edit_type = Type.find(params[:id])
-		@edit_type_id = @edit_type.id
-		@name = @edit_type.name
-		@title = "Types - Edit"
-	else
-		@edit_type_id = "new"
-		@title = "Types"
-	end
-	@types = Type.order("id desc").all
-	render :types and return
-  end
+ #  def types_params_get
+	# if params[:id] != "new"
+	# 	@edit_type = Type.find(params[:id])
+	# 	@edit_type_id = @edit_type.id
+	# 	@name = @edit_type.name
+	# 	@title = "Types - Edit"
+	# else
+	# 	@edit_type_id = "new"
+	# 	@title = "Types"
+	# end
+	# @types = Type.order("id desc").all
+	# render :types and return
+ #  end
 
-  def types_params_post
-	if params[:commit] == "Delete Type"
-		Type.destroy(params[:id])
-		redirect_to "/admin/types/new" and return
-	end
-	if params[:id] == "new"
-		type = Type.new
-	else
-		type = Type.find(params[:id])
-	end
-	type.name	= params[:name]
-	type.save!
-	redirect_to "/admin/types/new" and return
-  end
+ #  def types_params_post
+	# if params[:commit] == "Delete Type"
+	# 	Type.destroy(params[:id])
+	# 	redirect_to "/admin/types/new" and return
+	# end
+	# if params[:id] == "new"
+	# 	type = Type.new
+	# else
+	# 	type = Type.find(params[:id])
+	# end
+	# type.name	= params[:name]
+	# type.save!
+	# redirect_to "/admin/types/new" and return
+ #  end
 
   def quiz_builder_get
 	redirect_to "/admin/quiz-builder/new" and return
