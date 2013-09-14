@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20130905220533) do
   create_table "assignments", force: true do |t|
     t.integer "user_id"
     t.integer "quiz_setup_id"
+    t.float   "score"
   end
 
   create_table "categories", force: true do |t|
