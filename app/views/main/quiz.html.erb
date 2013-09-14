@@ -1,27 +1,37 @@
 <div class="container">
       <br>
       <%== form_tag "/quiz/#{@quiz.id}" do %>
-      <% @questions.find(:all, :order => :id, :limit => 5).each do |question| %>
-        <div class="well">
-          <h4><%= question.question_text %></h4>
-          <% if question.type.name == "True/False" %>
-            <%== radio_button_tag "question#{question.id}", "True" %>True<br>
-            <%== radio_button_tag "question#{question.id}", "False" %>False<br>
-          <% else %>
-            <% if question.choice1 != nil and question.choice1 != "" %>
-              <%== radio_button_tag "question#{question.id}", "question.choice1" %><%= question.choice1 %><br>
+      <% if session[:unanswered_questions] != [] %>
+        <% session[:unanswered_questions][0..3].each do |question_id| %>
+          <div class="well">
+            <h4><%= @questions.find(question_id).question_text %></h4>
+            <% if @questions.find(question_id).type.name == "True/False" %>
+              <%== radio_button_tag "question#{question_id}", "True" %>True<br>
+              <%== radio_button_tag "question#{question_id}", "False" %>False<br>
+            <% else %>
+              <% if @questions.find(question_id).choice1 != nil and @questions.find(question_id).choice1 != "" %>
+                <%== radio_button_tag "question#{question_id}", @questions.find(question_id).choice1 %><%= @questions.find(question_id).choice1 %><br>
+              <% end %>
+              <% if @questions.find(question_id).choice2 != nil and @questions.find(question_id).choice2 != "" %>
+                <%== radio_button_tag "question#{question_id}", @questions.find(question_id).choice2 %><%= @questions.find(question_id).choice2 %><br>
+              <% end %>
+              <% if @questions.find(question_id).choice3 != nil and @questions.find(question_id).choice3 != "" %>
+                <%== radio_button_tag "question#{question_id}", @questions.find(question_id).choice3 %><%= @questions.find(question_id).choice3 %><br>
+              <% end %>
+              <% if @questions.find(question_id).choice4 != nil and @questions.find(question_id).choice4 != "" %>
+                <%== radio_button_tag "question#{question_id}", @questions.find(question_id).choice4 %><%= @questions.find(question_id).choice4 %>
+              <% end %>
             <% end %>
-            <% if question.choice2 != nil and question.choice2 != "" %>
-              <%== radio_button_tag "question#{question.id}", "question.choice2" %><%= question.choice2 %><br>
-            <% end %>
-            <% if question.choice3 != nil and question.choice3 != "" %>
-              <%== radio_button_tag "question#{question.id}", "question.choice3" %><%= question.choice3 %><br>
-            <% end %>
-            <% if question.choice4 != nil and question.choice4 != "" %>
-              <%== radio_button_tag "question#{question.id}", "question.choice4" %><%= question.choice4 %>
-            <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       <% end %>
-      <%= submit_tag "Next" %>
+      <% if session[:unanswered_questions] != nil %>
+        <% if session[:unanswered_questions] != [] %>
+          <% if session[:unanswered_questions].length < 4 %>
+            <%= submit_tag "Finish" %>
+          <% else %>
+            <%= submit_tag "Next" %>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>  <!-- This is for the form tag. -->

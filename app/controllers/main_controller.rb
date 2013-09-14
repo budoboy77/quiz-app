@@ -71,19 +71,38 @@ class MainController < ApplicationController
 	def quiz_get
 		@quiz = QuizSetup.find(params[:quiz_id])
 		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
+		@quiz_results = QuizResult.where(quiz_setup_id: @quiz.id).where(user_id: session[:user_id])
+		@unanswered_questions = []
+		@questions.each do |question|
+			if @quiz_results.where(question_id: question.id).first == nil
+				@unanswered_questions << question.id
+			end
+		end
+		session[:unanswered_questions] = @unanswered_questions
 		render :quiz and return
 	end
 
 	def quiz_post
 		@quiz = QuizSetup.find(params[:quiz_id])
 		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
-		@questions.each do |question|
-			quiz_result = QuizResult.new
-			quiz_result.quiz_setup_id = @quiz.id
-			quiz_result.question_id = params["question#{question.id}"].slice
-			quiz_result.answer = params["question#{question.id}"]
+		session[:unanswered_questions][0..3].each do |question_id|
+			if params["question#{question_id}"] == nil
+				flash.now[:error] = "Please answer all the questions."
+				render :quiz and return
+			else
+				quiz_result = QuizResult.new
+				quiz_result.quiz_setup_id = @quiz.id
+				quiz_result.question_id = question_id
+				quiz_result.user_answer = params["question#{question_id}"]
+				quiz_result.user_id = session[:user_id]
+				quiz_result.save!
+			end
 		end
-		
+		if params[:commit] == "Finish"
+		  flash[:success] = "Thank you for completing the quiz."
+		  redirect_to "/myquizzes" and return
+		end
+		redirect_to "/quiz/#{@quiz.id}" and return
 	end
 
 	def help_get
