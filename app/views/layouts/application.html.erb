@@ -34,22 +34,15 @@
             <div class="navbar-content">
               <ul class="nav  pull-right">
                 <% if session[:admin_id] %>
-                  <li>
-                    <a href="/admin/questions">Questions</a> 
-                  </li>
-                  <li>
-                    <a href="/admin/categories">Categories</a> 
-                  </li>
-                  <li>
-                    <a href="/admin/users">Users</a> 
-                  </li>
+                  <li class="<%= 'active' if @title.include? "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quizzes</a></li>
+                  <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
+                  <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>
+                  <li class="<%= 'active' if @title.include? "User" %>"><a href="/admin/users/index">Users</a></li>
                   <li>
                     <a href="/logout">Logout</a> 
                   </li>
                 <% else %>
-                  <li>
-                    <a href="/helppage">Help</a> 
-                  </li>
+                
                   <li>
                     <a href="/logout">Logout</a> 
                   </li>
