@@ -26,4 +26,10 @@ QuizApp::Application.routes.draw do
   get "/admin/quiz-builder"     => "admin#quiz_builder_get"
   get "/admin/quiz-builder/:id" => "admin#quiz_builder_params_get"
   post "/admin/quiz-builder/:id" => "admin#quiz_builder_params_post"
+  get "/admin/user-quiz-results/:id"  => "admin#user_quiz_results"
+  get "/admin/users"           => "admin#users_get"
+  get "/admin/users/:id"        => "admin#users_params_get"
+  post "/admin/users/:id"       => "admin#users_params_post"
+  get "/admin/user/:user_id/quiz/:quiz_id"           => "admin#users_quiz_results_params_get"
+  get '*a', :to => 'errors#routing'
 end
