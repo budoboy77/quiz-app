@@ -1,0 +1,48 @@
+<div class="well">
+  <table class="table table-striped table-hover table-bordered table-fixed">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email Address</th>
+      <th>Quizzes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.first_name %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.email %></td>
+      <td><a href="/admin/users/<%= user.id %>">Quizzes</a></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<% if params[:id] != "index" %>
+<div class="well">
+  <H1><%= @users.find(params[:id]).first_name %> <%= @users.find(params[:id]).last_name %></H1>
+  <table class="table table-striped table-hover table-bordered table-fixed">
+  <thead>
+    <tr>
+      <th>Quiz Name</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @quiz_assignments.each do |quiz_assignment| %>
+    <tr>
+      <% if quiz_assignment.score == nil %>
+        <td><%= @quizzes.where(id: quiz_assignment.quiz_setup_id).first.name %></td>
+      <% else %>
+        <td><a href="/admin/user/<%= params[:id] %>/quiz/<%= @quizzes.where(id: quiz_assignment.quiz_setup_id).first.id %>"><%= @quizzes.where(id: quiz_assignment.quiz_setup_id).first.name %></a></td>
+      <% end %>
+      <td><%= quiz_assignment.score %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>
