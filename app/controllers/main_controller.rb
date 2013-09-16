@@ -69,6 +69,7 @@ class MainController < ApplicationController
 	end
 
 	def quiz_get
+		@title = "Quiz"
 		@user = User.find(session[:user_id])
 		@quiz = QuizSetup.where(id: params[:quiz_id]).first
 		if @quiz == nil
@@ -129,7 +130,7 @@ class MainController < ApplicationController
 	end
 
 	def help_get
-		@title = "help"
+		@title = "Help"
 		render :help and return
 	end
 
