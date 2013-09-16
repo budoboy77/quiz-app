@@ -67,8 +67,8 @@
           <% end %>
           </td>
         <td>
-          <% quizsetup.users.all.each do |user| %>
-            <%= user.first_name %> <%= user.last_name %><br>
+          <% quizsetup.assignments.where(is_assigned: true).all.each do |user| %>
+            <%= User.find(user.user_id).first_name %> <%= User.find(user.user_id).last_name %><br>
           <% end %>
         </td>
       </tr>

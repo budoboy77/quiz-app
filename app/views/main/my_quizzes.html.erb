@@ -2,7 +2,7 @@
   <div class="well">
     <h4>Quizzes assigned to me:</h4>
     <% @my_quizzes.each do |quiz| %>
-	    <% if quiz.assignments.where(user_id: session[:user_id]).first.score == nil %>
+	    <% if quiz.assignments.where(user_id: session[:user_id]).first.score == nil and quiz.assignments.where(user_id: session[:user_id]).first.is_assigned == true %>
 	    	<a href="/quiz/<%= quiz.id %>"><%= quiz.name %></a>
 	    <% end %>
 	<% end %>
@@ -11,7 +11,7 @@
     <h4>Quizzes I have competed:</h4>
     <% @my_quizzes.each do |quiz| %>
 	    <% if quiz.assignments.where(user_id: session[:user_id]).first.score != nil %>
-	    	<%= quiz.name %> - My Score: <b><%= quiz.assignments.where(user_id: session[:user_id]).first.score %>%</b>
+	    	<%= quiz.name %> - My Score: <b><%= quiz.assignments.where(user_id: session[:user_id]).first.score %>%</b><br>
 	    <% end %>
 	<% end %>
   </div>

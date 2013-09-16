@@ -162,38 +162,33 @@ class AdminController < ApplicationController
 	redirect_to "/admin/categories/new" and return
   end
 
- #  def types_get
-	# redirect_to "/admin/types/new" and return
- #  end
+  def users_get
+  	redirect_to "/admin/users/index"
+  end
 
- #  def types_params_get
-	# if params[:id] != "new"
-	# 	@edit_type = Type.find(params[:id])
-	# 	@edit_type_id = @edit_type.id
-	# 	@name = @edit_type.name
-	# 	@title = "Types - Edit"
-	# else
-	# 	@edit_type_id = "new"
-	# 	@title = "Types"
-	# end
-	# @types = Type.order("id desc").all
-	# render :types and return
- #  end
+  def users_params_get
+  	@title = "Users"
+  	@users = User.all
+  	if @users.where(id: params[:id]) == []
+  		render :users and return
+  	end
+  	if params[:id] != "index"
+  	  @quiz_assignments = @users.find(params[:id]).assignments
+  	end
+  	@quizzes = QuizSetup.all
+  	render :users and return
+  end
 
- #  def types_params_post
-	# if params[:commit] == "Delete Type"
-	# 	Type.destroy(params[:id])
-	# 	redirect_to "/admin/types/new" and return
-	# end
-	# if params[:id] == "new"
-	# 	type = Type.new
-	# else
-	# 	type = Type.find(params[:id])
-	# end
-	# type.name	= params[:name]
-	# type.save!
-	# redirect_to "/admin/types/new" and return
- #  end
+  def users_quiz_results_params_get
+  	@title = "User's Quiz Results"
+  	@quiz_results = QuizResult.where(quiz_setup_id: params[:quiz_id]).where(user_id: params[:user_id])
+  	if @quiz_results == [] 
+  		redirect_to "/admin/users/index" and return
+  	end
+  	@user = User.where(id: params[:user_id]).first
+  	@quizzes = QuizSetup.all
+  	render :user_quiz_results and return
+  end
 
   def quiz_builder_get
 	redirect_to "/admin/quiz-builder/new" and return
@@ -209,13 +204,13 @@ class AdminController < ApplicationController
 		categories_array = []
         QuizSetup.find(params[:id]).questions.each do |question|
           categories_array << question.category.name
-        end
+    	end
         @categories_hash = categories_array.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
         @users_array = []
-        QuizSetup.find(params[:id]).users.each do |user|
-          @users_array << user.id
+        QuizSetup.find(params[:id]).assignments.where(is_assigned: true).all.each do |user|
+          @users_array << User.find(user.user_id).id
         end
-        else
+    else
 		@edit_quiz_setup_id = "new"
 		@edit_quiz_setup_name = ""
 		@categories_hash = {}
@@ -235,7 +230,7 @@ class AdminController < ApplicationController
 		quiz_setup = QuizSetup.new
 	else
 		QuizSetup.find(params[:id]).questionsquizsetups.delete_all
-		QuizSetup.find(params[:id]).assignments.delete_all
+		assignments = QuizSetup.find(params[:id]).assignments.all
 		quiz_setup = QuizSetup.find(params[:id])
 	end
 	quiz_setup.name	= params[:quiz_name]
@@ -257,16 +252,32 @@ class AdminController < ApplicationController
 		new_questions_to_quiz_link.save!
 	end
 	assigned_user_array = []
+	unassigned_user_array = []
 	User.all.each do |user|
 	  if params["user#{user.id}"] == "on"
 	  	assigned_user_array << user.id
+	  else
+	  	unassigned_user_array << user.id
 	  end
 	end
-	assigned_user_array.each do |assignment|
-		new_assignment = Assignment.new
-		new_assignment.quiz_setup_id = @edit_quiz_setup.id
-		new_assignment.user_id   = assignment
-		new_assignment.save!
+	assigned_user_array.each do |user_id|
+		if User.find(user_id).assignments.where(quiz_setup_id: params[:id]).first != nil
+	  		assignment 			= User.find(user_id).assignments.where(quiz_setup_id: params[:id]).first
+		else
+			assignment 			= Assignment.new
+		end
+		assignment.quiz_setup_id = @edit_quiz_setup.id
+		assignment.user_id   	 = user_id
+		assignment.is_assigned	 = true
+		assignment.inspect
+		assignment.save!
+	end
+	unassigned_user_array.each do |user_id|
+		assignment = User.find(user_id).assignments.where(quiz_setup_id: params[:id]).first
+		if assignment != nil
+			assignment.is_assigned = false
+			assignment.save!
+		end
 	end
 	redirect_to "/admin/quiz-builder/new" and return
   end
