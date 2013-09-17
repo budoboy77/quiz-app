@@ -42,11 +42,12 @@
                     <a href="/logout">Logout</a> 
                   </li>
                 <% else %>
-                
+                  <li class="<%= 'active' if @title.include? "My Quizzes" %>"><a href="/myquizzes">My Quizzes</a></li>
+                <% end %>
                   <li>
                     <a href="/logout">Logout</a> 
                   </li>
-                <% end %>
+                
               </ul>
             </div>
           </div>
