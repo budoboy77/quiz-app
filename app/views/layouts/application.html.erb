@@ -9,7 +9,7 @@
     <% elsif @title == "Login" %>
       <title>Login</title>
     <% else %>
-      <title>Quiz App - <%= @title %></title>
+      <title>QuiZapp - <%= @title %></title>
     <% end %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -24,13 +24,13 @@
     <% elsif @title == "Login" %>
       <title>Login</title>
     <% else %>
-      <title>Quiz App - <%= @title %></title>
+      <title>QuiZapp - <%= @title %></title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
       <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
           <div class="container">
-            <a class="brand" href="#">Quiz App - <%= @title %></a>
+            <a class="brand" href="#">QuiZapp - <%= @title %></a>
             <div class="navbar-content">
               <ul class="nav  pull-right">
                 <% if session[:admin_id] %>

@@ -1091,9 +1091,9 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 20px;
-  padding: 4px 6px;
-  margin-bottom: 10px;
+  height: 22px;
+  padding: 0px 4px;
+  margin-bottom: 0px;
   font-size: 14px;
   line-height: 20px;
   color: #555555;
@@ -6110,8 +6110,10 @@ a.badge:focus {
 }
 
 .hero-unit {
-  padding: 60px;
-  margin-bottom: 30px;
+  padding-top: 10px;
+  padding-left: 60px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
