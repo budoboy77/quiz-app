@@ -10,6 +10,7 @@ QuizApp::Application.routes.draw do
   post "/quiz/:quiz_id"         => "main#quiz_post"
   get "/help"                   => "main#help_get"
   get "/clicked"                => "main#clicked_get"
+  get "/myquizzes/:quiz_id"     => "main#quiz_detail_params_get"
   get "/admin"                  => "admin#admin_get"
   get "/admin/login"            => "admin#login_get"
   post "/admin/login"           => "admin#login_post"

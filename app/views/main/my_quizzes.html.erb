@@ -11,7 +11,7 @@
     <h4>Quizzes I have competed:</h4>
     <% @my_quizzes.each do |quiz| %>
 	    <% if quiz.assignments.where(user_id: session[:user_id]).first.score != nil %>
-	    	<%= quiz.name %> - My Score: <b><%= quiz.assignments.where(user_id: session[:user_id]).first.score %>%</b><br>
+	    	<a href="/myquizzes/<%= quiz.id %>"><%= quiz.name %></a> - My Score: <b><%= quiz.assignments.where(user_id: session[:user_id]).first.score %>%</b><br>
 	    <% end %>
 	<% end %>
   </div>

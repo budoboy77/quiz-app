@@ -68,6 +68,13 @@ class MainController < ApplicationController
 		render :my_quizzes and return
 	end
 
+	def quiz_detail_params_get
+		@quiz_results = QuizResult.where(quiz_setup_id: params[:quiz_id]).where(user_id: session[:user_id])
+		@quizzes = QuizSetup.all
+		@title = "Results for #{@quizzes.where(id: params[:quiz_id]).first.name}"
+		render :quiz_detail and return
+	end
+
 	def quiz_get
 		@title = "Quiz"
 		@user = User.find(session[:user_id])
