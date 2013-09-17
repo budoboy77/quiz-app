@@ -19,7 +19,11 @@
       <% else %>
         <td>No</td>
       <% end %>
-      <td><%= question.correct_answer %></td>
+      <% if @quiz_results.where(question_id: question.id).first.is_correct == false %>
+        <td><%= question.correct_answer %></td>
+      <% else %>
+        <td>----------</td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>
