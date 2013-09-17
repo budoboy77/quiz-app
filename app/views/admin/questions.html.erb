@@ -17,7 +17,7 @@
           <%== text_field_tag :new_category, "", size: 40 %></td>
         <td><%== select_tag :type, options_from_collection_for_select(@types, :name, :name, @type), prompt: "Choose a type..." %><br>
         <td><%== text_area_tag :text, @text, rows: 3, cols: 100 %></td>
-        <td><%== text_field_tag :choice1, @choice1, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer1, "on", @answer1 %></label><br><%== text_field_tag :choice2, @choice2, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer2, "on", @answer2 %></label><br><%== text_field_tag :choice3, @choice3, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag @answer3, "on", @answer3 %></label><br><%== text_field_tag :choice4, @choice4, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer4, "on", @answer4 %></label></td>
+        <td><%== text_field_tag :choice1, @choice1, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer1, "on", @answer1 %></label><br><%== text_field_tag :choice2, @choice2, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer2, "on", @answer2 %></label><br><%== text_field_tag :choice3, @choice3, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer3, "on", @answer3 %></label><br><%== text_field_tag :choice4, @choice4, size: 40 %><label class="checkbox inline" for "checkbox"> <%== check_box_tag :answer4, "on", @answer4 %></label></td>
       </tr>
   </table>
   <% if params[:id] != "new" %>
