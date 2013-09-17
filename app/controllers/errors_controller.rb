@@ -1,5 +1,10 @@
 class ErrorsController < ApplicationController
   def routing
-    redirect_to "/admin/users/index" and return
+  	flash[:error] = "The page you are trying to access does not exist."
+  	if session[:admin_id] != nil
+    	redirect_to "/admin" and return
+    else
+    	redirect_to "/myquizzes" and return
+    end
   end
 end
