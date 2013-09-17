@@ -23,6 +23,8 @@
       <title>Register New User</title>
     <% elsif @title == "Login" %>
       <title>Login</title>
+    <% elsif @title == "Admin Login" %>
+      <title>Admin Login</title>
     <% else %>
       <title>QuiZapp - <%= @title %></title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +35,7 @@
             <a class="brand" href="#">QuiZapp - <%= @title %></a>
             <div class="navbar-content">
               <ul class="nav  pull-right">
-                <% if session[:admin_id] %>
+                <% if Admin.where(id: session[:admin_id]).first != nil %>
                   <li class="<%= 'active' if @title.include? "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quizzes</a></li>
                   <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
                   <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>

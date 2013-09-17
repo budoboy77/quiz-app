@@ -11,6 +11,7 @@ class AdminController < ApplicationController
   end
 
   def login_get
+  	@title = "Admin Login"
     render :login and return
   end
 
