@@ -1,6 +1,6 @@
 class MainController < ApplicationController
 
-    before_filter except: ["root_get", "login_get", "login_post", "logout", "register_get"] do
+    before_filter except: ["root_get", "login_get", "login_post", "logout", "register_get", "register_post"] do
     if session[:user_id] != nil
       user = User.where(id: session[:user_id]).first
     else
@@ -123,7 +123,7 @@ class MainController < ApplicationController
 		  save_score = User.find(session[:user_id]).assignments.where(quiz_setup_id: @quiz.id).first
 		  save_score.score = @score.to_i
 		  save_score.save!
-		  flash[:success] = "Thank you for completing the quiz."
+		  flash[:success] = "Thank you for completing the quiz.  You scored #{@score}%."
 		  redirect_to "/myquizzes" and return
 		end
 		redirect_to "/quiz/#{@quiz.id}" and return
