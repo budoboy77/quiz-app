@@ -38,9 +38,6 @@
                   <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
                   <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>
                   <li class="<%= 'active' if @title.include? "User" %>"><a href="/admin/users/index">Users</a></li>
-                  <li>
-                    <a href="/logout">Logout</a> 
-                  </li>
                 <% else %>
                   <li class="<%= 'active' if @title.include? "My Quizzes" %>"><a href="/myquizzes">My Quizzes</a></li>
                 <% end %>
