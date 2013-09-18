@@ -11,12 +11,17 @@
   <tbody>
     <% @quizzes.where(id: params[:quiz_id]).first.questions.each do |question| %>
     <tr>
-      <td><%= question.question_text %></td>
-      <td><%= question.correct_answer %></td>
+        <td><%= question.question_text %></td>
+      <td><%= @quiz_results.where(question_id: question.id).first.user_answer %></td>
       <% if @quiz_results.where(question_id: question.id).first.is_correct == true %>
-        <td>Yes</td>
+        <td style="background-color:green; color:white;">Yes</td>
       <% else %>
-        <td>No</td>
+        <td style="background-color:red; color:white;">No</td>
+      <% end %>
+      <% if @quiz_results.where(question_id: question.id).first.is_correct == false %>
+        <td><%= question.correct_answer %></td>
+      <% else %>
+        <td>----------</td>
       <% end %>
     </tr>
     <% end %>
