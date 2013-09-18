@@ -64,6 +64,8 @@ GEM
     multi_json (1.7.9)
     pg (0.16.0)
     polyglot (0.3.3)
+    pony (1.5)
+      mail (> 2.0)
     rack (1.5.2)
     rack-flash3 (1.0.3)
       rack
@@ -133,6 +135,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   pg
+  pony
   rack-flash3
   rails (= 4.0.0)
   rails-footnotes!
