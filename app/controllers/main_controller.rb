@@ -71,6 +71,7 @@ class MainController < ApplicationController
 	def quiz_detail_params_get
 		@quiz_results = QuizResult.where(quiz_setup_id: params[:quiz_id]).where(user_id: session[:user_id])
 		@quizzes = QuizSetup.all
+		@questions = QuizSetup.find(params[:quiz_id]).questions
 		@title = "Results for #{@quizzes.where(id: params[:quiz_id]).first.name}"
 		render :quiz_detail and return
 	end
@@ -86,7 +87,7 @@ class MainController < ApplicationController
 		if @quiz_setup == nil
 			redirect_to "/myquizzes" and return
 		end
-		@questions = @user.quiz_setups.find(@quiz.id).questions
+		@questions = QuizSetup.find(@quiz.id).questions
 		@quiz_results = QuizResult.where(quiz_setup_id: @quiz.id).where(user_id: session[:user_id])
 		if User.find(session[:user_id]).assignments.where(quiz_setup_id: @quiz.id).first.score != nil
 			redirect_to "/myquizzes" and return
@@ -97,15 +98,15 @@ class MainController < ApplicationController
 				@unanswered_questions << question.id
 			end
 		end
-		session[:unanswered_questions] = @unanswered_questions
+		session[:unanswered_questions] = @unanswered_questions[0..3]
 		render :quiz and return
 	end
 
 	def quiz_post
 		@quiz = QuizSetup.find(params[:quiz_id])
-		@questions = User.find(session[:user_id]).quiz_setups.find(@quiz.id).questions
+		@questions = QuizSetup.find(@quiz.id).questions
 		@quiz_results = QuizResult.where(quiz_setup_id: @quiz.id).where(user_id: session[:user_id])
-		session[:unanswered_questions][0..3].each do |question_id|
+		session[:unanswered_questions].each do |question_id|
 			if params["question#{question_id}"] == nil
 				flash.now[:error] = "Please answer all the questions."
 				render :quiz and return
@@ -114,13 +115,12 @@ class MainController < ApplicationController
 				quiz_result.quiz_setup_id = @quiz.id
 				quiz_result.question_id = question_id
 				quiz_result.user_answer = params["question#{question_id}"]
-				quiz_result.user_id = session[:user_id]
-				quiz_result.save!
-				if params["question#{question_id}"] == @questions.find(question_id).correct_answer
+				if quiz_result.user_answer == @questions.find(question_id).correct_answer
 					quiz_result.is_correct = true
 				else
 					quiz_result.is_correct = false
 				end
+				quiz_result.user_id = session[:user_id]
 				quiz_result.save!
 			end
 		end

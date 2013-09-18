@@ -2,7 +2,7 @@
       <br>
       <%== form_tag "/quiz/#{@quiz.id}" do %>
       <% if session[:unanswered_questions] != [] %>
-        <% session[:unanswered_questions][0..3].each do |question_id| %>
+        <% session[:unanswered_questions].each do |question_id| %>
           <div class="well">
             <h4><%= @questions.find(question_id).question_text %></h4>
             <% if @questions.find(question_id).type.name == "True/False" %>
