@@ -16,6 +16,7 @@ class AdminController < ApplicationController
   end
 
   def login_post
+  	@title == "Admin Login"
     username = params[:username]
     password = params[:password]
     admin    = Admin.where(username: username).first
@@ -285,5 +286,15 @@ class AdminController < ApplicationController
 		end
 	end
 	redirect_to "/admin/quiz-builder/new" and return
+  end
+
+  def reports_get
+	redirect_to "/admin/reports/:id" and return
+  end
+
+  def reports_params_get
+  end
+
+  def reports_params_post
   end
 end

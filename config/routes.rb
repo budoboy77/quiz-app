@@ -31,6 +31,9 @@ QuizApp::Application.routes.draw do
   get "/admin/users"           => "admin#users_get"
   get "/admin/users/:id"        => "admin#users_params_get"
   post "/admin/users/:id"       => "admin#users_params_post"
+  get "/admin/reports"       => "admin#reports_get"
+  get "/admin/reports/:id"   => "admin#reports_params_get"
+  post "/admin/reports/:id"  => "admin#reports_params_post"
   get "/admin/user/:user_id/quiz/:quiz_id"           => "admin#users_quiz_results_params_get"
   get '*a', :to => 'errors#routing'
 end
