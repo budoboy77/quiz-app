@@ -31,6 +31,11 @@ class MainController < ApplicationController
 				render :register and return
 			else
 				user.save!
+				Pony.mail(
+  						to:      user.email,
+  						subject: "Thanks for registering at QuiZapp",
+  						body:    "Thank you for registering on QuiZapp.  You may log in at any time by going to http://localhost:9292/login"
+							)
 				redirect_to "/login" and return
 			end
 	end
@@ -69,11 +74,16 @@ class MainController < ApplicationController
 	end
 
 	def quiz_detail_params_get
-		@quiz_results = QuizResult.where(quiz_setup_id: params[:quiz_id]).where(user_id: session[:user_id])
-		@quizzes = QuizSetup.all
-		@questions = QuizSetup.find(params[:quiz_id]).questions
-		@title = "Results for #{@quizzes.where(id: params[:quiz_id]).first.name}"
-		render :quiz_detail and return
+		@quiz = QuizSetup.where(id: params[:quiz_id]).first
+		if @quiz != nil
+			@quiz_results = QuizResult.where(quiz_setup_id: params[:quiz_id]).where(user_id: session[:user_id])
+			@quizzes = QuizSetup.all
+			@questions = QuizSetup.find(params[:quiz_id]).questions
+			@title = "Results for #{@quizzes.where(id: params[:quiz_id]).first.name}"
+			render :quiz_detail and return
+		else
+			redirect_to "/myquizzes" and return
+		end
 	end
 
 	def quiz_get

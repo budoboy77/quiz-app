@@ -231,12 +231,11 @@ class AdminController < ApplicationController
 		quiz_setup = QuizSetup.new
 	else
 		QuizSetup.find(params[:id]).questionsquizsetups.delete_all
-		assignments = QuizSetup.find(params[:id]).assignments.all
 		quiz_setup = QuizSetup.find(params[:id])
+		assignments = quiz_setup.assignments.all
 	end
 	quiz_setup.name	= params[:quiz_name]
 	quiz_setup.save!
-	@edit_quiz_setup = QuizSetup.where(name: quiz_setup.name).first
 	question_array = []
 	Category.all.each do |category|
 	  category1 = Category.where(name: params["category#{category.id}"]).first
@@ -248,7 +247,7 @@ class AdminController < ApplicationController
 	end
 	question_array.each do |question_element|
 		new_questions_to_quiz_link = Questionsquizsetup.new
-		new_questions_to_quiz_link.quiz_setup_id = @edit_quiz_setup.id
+		new_questions_to_quiz_link.quiz_setup_id = quiz_setup.id
 		new_questions_to_quiz_link.question_id   = question_element
 		new_questions_to_quiz_link.save!
 	end
@@ -266,12 +265,17 @@ class AdminController < ApplicationController
 	  		assignment 			= User.find(user_id).assignments.where(quiz_setup_id: params[:id]).first
 		else
 			assignment 			= Assignment.new
+			Pony.mail(
+  						to:      User.find(user_id).email,
+  						subject: "A quiz has been assigned to you.",
+  						body:    "A new quiz has been assigned to you.  You may access the new quiz by going to #{login_url()} and logging in."
+							)
 		end
-		assignment.quiz_setup_id = @edit_quiz_setup.id
+		assignment.quiz_setup_id = quiz_setup.id
 		assignment.user_id   	 = user_id
 		assignment.is_assigned	 = true
-		assignment.inspect
 		assignment.save!
+		
 	end
 	unassigned_user_array.each do |user_id|
 		assignment = User.find(user_id).assignments.where(quiz_setup_id: params[:id]).first
