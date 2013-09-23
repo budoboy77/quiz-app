@@ -3,7 +3,7 @@
     <h4>Quizzes assigned to me:</h4>
     <% @my_quizzes.each do |quiz| %>
 	    <% if quiz.assignments.where(user_id: session[:user_id]).first.score == nil and quiz.assignments.where(user_id: session[:user_id]).first.is_assigned == true %>
-	    	<a href="/quiz/<%= quiz.id %>"><%= quiz.name %></a>
+	    	<a href="/quiz/<%= quiz.id %>"><%= quiz.name %></a><br>
 	    <% end %>
 	<% end %>
   </div>
