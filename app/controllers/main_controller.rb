@@ -20,6 +20,10 @@ class MainController < ApplicationController
 
 	def register_post
 		@title = "Register"
+		if User.where(email: params[:email]).first != nil
+			flash.now[:error] = "This email address is already registered."
+		  render :register and return
+		end
 		user = User.new
 		user.first_name = params[:first_name]
 		user.last_name = params[:last_name]
