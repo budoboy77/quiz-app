@@ -18,56 +18,63 @@
     </script>
   </head>
   
-  <body>
-    <% if @title == "Register" %>
-      <title>Register New User</title>
-    <% elsif @title == "Login" %>
-      <title>Login</title>
-    <% elsif @title == "Admin Login" %>
-      <title>Admin Login</title>
-    <% else %>
-      <title>QuiZapp - <%= @title %></title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
-            <a class="brand" href="#">QuiZapp - <%= @title %></a>
-            <div class="navbar-content">
-              <ul class="nav  pull-right">
-                <% if Admin.where(id: session[:admin_id]).first != nil %>
-                  <li class="<%= 'active' if @title.include? "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quizzes</a></li>
-                  <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
-                  <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>
-                  <li class="<%= 'active' if @title.include? "User" %>"><a href="/admin/users/index">Users</a></li>
-                <% else %>
-                  <li class="<%= 'active' if @title.include? "My Quizzes" %>"><a href="/myquizzes">My Quizzes</a></li>
-                <% end %>
-                  <li>
-                    <a href="/logout">Logout</a> 
-                  </li>
-                
-              </ul>
+  <% if @title == "Register" or @title == "Login" or @title == "Admin Login" %>
+    <body style="padding-top: 0px;">
+  <% else %>
+    <body>
+  <% end %>
+      <% if @title == "Register" %>
+        <title>Register New User</title>
+        <center><h1>QuiZapp</h1></center>
+      <% elsif @title == "Login" %>
+        <title>Login</title>
+        <center><h1>QuiZapp</h1></center>
+      <% elsif @title == "Admin Login" %>
+        <title>Admin Login</title>
+        <center><h1>QuiZapp</h1></center>
+      <% else %>
+        <title>QuiZapp - <%= @title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#">QuiZapp - <%= @title %></a>
+              <div class="navbar-content">
+                <ul class="nav  pull-right">
+                  <% if Admin.where(id: session[:admin_id]).first != nil %>
+                    <li class="<%= 'active' if @title.include? "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quizzes</a></li>
+                    <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
+                    <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>
+                    <li class="<%= 'active' if @title.include? "User" %>"><a href="/admin/users/index">Users</a></li>
+                  <% else %>
+                    <li class="<%= 'active' if @title.include? "My Quizzes" %>"><a href="/myquizzes">My Quizzes</a></li>
+                  <% end %>
+                    <li>
+                      <a href="/logout">Logout</a> 
+                    </li>
+                  
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
-    <% if flash[:error] %>
-      <div class="well">
-        <div class="alert-error">
-          <%= flash[:error] %>
+      <% end %>
+      <% if flash[:error] %>
+        <div class="well">
+          <div class="alert-error">
+            <%= flash[:error] %>
+          </div>
         </div>
-      </div>
-    <% end %>
-    <% if flash[:success] %>
-      <div class="well">
-        <div class="alert-success">
-          <%= flash[:success] %>
+      <% end %>
+      <% if flash[:success] %>
+        <div class="well">
+          <div class="alert-success">
+            <%= flash[:success] %>
+          </div>
         </div>
-      </div>
-    <% end %>
-<%== yield %>
+      <% end %>
+  <%== yield %>
   </body>
 
 </html>
