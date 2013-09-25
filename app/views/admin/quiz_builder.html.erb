@@ -1,6 +1,6 @@
 <div class="well">
    <%== form_tag "/admin/quiz-builder/#{@edit_quiz_setup_id}" do %>
-  <table class="table">
+  <table class="table table-bordered table-fixed">
     <thead>
       <tr>
         <th>Quiz Name</th>
@@ -9,35 +9,59 @@
       </tr>
     </thead>
     <tbody>
-       <tr>
+     <tr>
+      <% if QuizResult.where(quiz_setup_id: params[:id]).first == nil %>
         <td><%== text_field_tag :quiz_name, @edit_quiz_setup_name, size: 40 %></td>
         <td>
           <% Category.all.each do |category| %>
-          <% @category_name = @categories_hash.keys.select { |key, value| key.to_s.match(category.name)} %>
-          <% @category_name_string = @category_name.join("") %>
-          <% if @categories_hash.has_key?(@category_name_string) %>
-            <% @category_qty = @categories_hash.fetch(@category_name_string) %>
-          <% else %>
-            <% @category_qty = 0 %>
-          <% end %>
-          <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name, @category_name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", @category_qty, size: 5 %><br>
-        <% end %>
-        </td>
-        <td>  
-          <% User.order(:last_name).all.each do |user| %>
-            <% if @users_array.include? user.id %>
-              <%== check_box_tag "user#{user.id}", "on", true %> <%= user.first_name %> <%= user.last_name %><br>
+            <% @category_name = @categories_hash.keys.select { |key, value| key.to_s.match(category.name)} %>
+            <% @category_name_string = @category_name.join("") %>
+            <% if @categories_hash.has_key?(@category_name_string) %>
+              <% @category_qty = @categories_hash.fetch(@category_name_string) %>
             <% else %>
-              <%== check_box_tag "user#{user.id}", "on" %> <%= user.first_name %> <%= user.last_name %><br>
+              <% @category_qty = 0 %>
+            <% end %>
+            <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name, @category_name), prompt: "Choose a category..." %> <%== text_field_tag "qty#{category.id}", @category_qty, size: 5 %><br>
+          <% end %>
+        </td>
+      <% else %>
+        <td><%== text_field_tag :quiz_name, @edit_quiz_setup_name, size: 40, :readonly => true %></td>
+        <td>
+          <% Category.all.each do |category| %>
+            <% @category_name = @categories_hash.keys.select { |key, value| key.to_s.match(category.name)} %>
+            <% @category_name_string = @category_name.join("") %>
+            <% if @categories_hash.has_key?(@category_name_string) %>
+              <% @category_qty = @categories_hash.fetch(@category_name_string) %>
+            <% else %>
+              <% @category_qty = 0 %>
+            <% end %>
+            <%== select_tag "category#{category.id}", options_from_collection_for_select(Category.order(:name).all, :name, :name, @category_name), prompt: "Choose a category...", :disabled => true %> <%== text_field_tag "qty#{category.id}", @category_qty, size: 5, :readonly => true %><br>
+          <% end %>
+        </td>
+      <% end %>
+      <td>  
+        <% User.order(:last_name).all.each do |user| %>
+          <% if QuizResult.where(quiz_setup_id: params[:id]).where(user_id: user.id).first == nil %>
+            <% if @users_array.include? user.id %>
+              <%= check_box_tag "user#{user.id}", "on", true %> <%= user.first_name %> <%= user.last_name %><br>
+            <% else %>
+              <%= check_box_tag "user#{user.id}", "on" %> <%= user.first_name %> <%= user.last_name %><br>
+            <% end %>
+          <% else %>
+            <% if @users_array.include? user.id %>
+              <%= check_box_tag "user#{user.id}", "on", true, :style => 'visibility: hidden' %> <%= user.first_name %> <%= user.last_name %><br>
             <% end %>
           <% end %>
-        </td>
-      </tr>
+        <% end %>
+      </td>
+    </tr>
   </table>
-  <% if params[:id] != "new" %>
-    <%== submit_tag "Update quiz" %> <%== submit_tag "Delete quiz" %>
-  <% else %>    
-    <%== submit_tag "Add quiz" %>
+  <% if params[:id] != "new" and QuizResult.where(quiz_setup_id: params[:id]).first == nil %>
+    <%= submit_tag "Update quiz", :class => 'btn' %> <%== submit_tag "Delete quiz", :class => 'btn' %>
+  <% elsif params[:id] == "new" %>    
+    <%= submit_tag "Add quiz", :class => 'btn' %>
+  <% else %>
+    <h4>Quiz has been taken and cannot be edited.</h4> <%= submit_tag "Add/Remove Users", :class => 'btn' %> <a class=btn href="/admin/quiz-builder/new">Go back to new question</a>
   <% end %>
   <% end %> <!-- This end is for the form tag. -->
 </div>
