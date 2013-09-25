@@ -43,7 +43,7 @@
               <div class="navbar-content">
                 <ul class="nav  pull-right">
                   <% if Admin.where(id: session[:admin_id]).first != nil %>
-                    <li class="<%= 'active' if @title.include? "Quizzes" %>"><a href="/admin/quizzes">Quizzes</a></li>
+                    <li class="<%= 'active' if @title.include? "Quiz Results" %>"><a href="/admin/quizzes">Quiz Results</a></li>
                     <li class="<%= 'active' if @title.include? "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quiz Builder</a></li>
                     <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
                     <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>

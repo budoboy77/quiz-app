@@ -292,13 +292,13 @@ class AdminController < ApplicationController
   end
 
   def quizzes_get
-		@title = "Quizzes"
+		@title = "Quiz Results"
   	@quizzes =  QuizSetup.all
   	render :quizzes and return
   end
 
   def quizzes_params_get
-  	@title = "Quizzes"
+  	@title = "Quiz Results"
   	@quiz =  QuizSetup.find(params[:id])
   	@quiz_results = @quiz.quiz_results
   	@scores_array = []
