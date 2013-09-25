@@ -1,0 +1,36 @@
+<div class="well">
+  <H3><%= @quiz.name %></H3><br>
+  <a class=btn href="/admin/quizzes">Back to quiz list</a>
+</div>
+
+<div class="well">
+  <div>
+    <% if @average_score != "" %>
+      <h4>The average score on this quiz was <%= @average_score %>%</h4>
+    <% end %>
+  </div>
+  <table class="table table-striped table-hover table-bordered table-fixed">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% @quiz.assignments.each do |assignment| %>
+    <tr>
+      <td><%= User.where(id: assignment.user_id).first.first_name %> <%= User.where(id: assignment.user_id).first.last_name %></td>
+      <% if assignment.score.to_i <= 50 and assignment.score != nil %>
+        <td style="background-color:red; color:white;"><%= assignment.score %>%</td>
+      <% elsif assignment.score.to_i >= 51 and assignment.score.to_i <= 80 %>
+        <td style="background-color:yellow; color:black;"><%= assignment.score %>%</td>
+      <% elsif assignment.score.to_i >= 81 and assignment.score.to_i <= 100 %>
+        <td style="background-color:green; color:white;"><%= assignment.score %>%</td>
+      <% else %>
+        <td>Not completed yet</td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

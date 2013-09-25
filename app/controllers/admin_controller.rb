@@ -4,7 +4,6 @@ class AdminController < ApplicationController
     if session[:admin_id] != nil
       @admin = Admin.where(id: session[:admin_id]).first
     else
-      flash[:error] = "You must be logged in to see that page."
       session[:attempted_path] = request.path_info
       redirect_to "/admin/login" and return
     end
@@ -204,15 +203,15 @@ class AdminController < ApplicationController
 		@edit_quiz_setup_name = @edit_quiz_setup.name
 		@title = "Quiz Builder - Edit"
 		categories_array = []
-        QuizSetup.find(params[:id]).questions.each do |question|
-          categories_array << question.category.name
-    	end
-        @categories_hash = categories_array.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
-        @users_array = []
-        QuizSetup.find(params[:id]).assignments.where(is_assigned: true).all.each do |user|
-          @users_array << User.find(user.user_id).id
-        end
-    else
+    QuizSetup.find(params[:id]).questions.each do |question|
+      categories_array << question.category.name
+  	end
+    @categories_hash = categories_array.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
+    @users_array = []
+    QuizSetup.find(params[:id]).assignments.where(is_assigned: true).all.each do |user|
+      @users_array << User.find(user.user_id).id
+    end
+  else
 		@edit_quiz_setup_id = "new"
 		@edit_quiz_setup_name = ""
 		@categories_hash = {}
@@ -224,12 +223,16 @@ class AdminController < ApplicationController
   end
 
   def quiz_builder_params_post
-  	if params[:commit] == "Delete quiz"
+ 	if params[:commit] == "Delete quiz"
 		QuizSetup.destroy(params[:id])
+		Assignment.where(quiz_setup_id: params[:id]).destroy_all
 		redirect_to "/admin/quiz-builder/new" and return
 	end
-	if params[:id] == "new"
+	if params[:commit] == "Add quiz"
 		quiz_setup = QuizSetup.new
+	elsif params[:commit] == "Add/Remove Users"
+		quiz_setup = QuizSetup.find(params[:id])
+		assignments = quiz_setup.assignments.all
 	else
 		QuizSetup.find(params[:id]).questionsquizsetups.delete_all
 		quiz_setup = QuizSetup.find(params[:id])
@@ -288,13 +291,30 @@ class AdminController < ApplicationController
 	redirect_to "/admin/quiz-builder/new" and return
   end
 
-  def reports_get
-	redirect_to "/admin/reports/:id" and return
+  def quizzes_get
+		@title = "Quizzes"
+  	@quizzes =  QuizSetup.all
+  	render :quizzes and return
   end
 
-  def reports_params_get
+  def quizzes_params_get
+  	@title = "Quizzes"
+  	@quiz =  QuizSetup.find(params[:id])
+  	@quiz_results = @quiz.quiz_results
+  	@scores_array = []
+  	@quiz.assignments.each do |assignment|
+  		if QuizResult.where(user_id: assignment.user_id).where(quiz_setup_id: assignment.quiz_setup_id).first != nil
+  			@scores_array << assignment.score.to_i
+  		end
+  	end
+  	if @scores_array != []
+  		@average_score = @scores_array.inject(0) { |sum, el| sum + el } / @scores_array.size
+  	else
+  		@average_score = ""
+  	end
+  	render :quiz_report and return
   end
 
-  def reports_params_post
+  def quizzes_params_post
   end
 end

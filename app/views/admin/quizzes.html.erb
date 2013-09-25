@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="well">
+    <h4>Quiz list</h4>
+    <% @quizzes.all.each do |quiz| %>
+	    <a href="/admin/quizzes/<%= quiz.id %>"><%= quiz.name %></a>
+	  <% end %>
+  </div>
+</div>
