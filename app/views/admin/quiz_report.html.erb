@@ -19,7 +19,11 @@
   <tbody>
      <% @quiz.assignments.each do |assignment| %>
     <tr>
-      <td><%= User.where(id: assignment.user_id).first.first_name %> <%= User.where(id: assignment.user_id).first.last_name %></td>
+      <% if assignment.score != nil %>
+      <td><a href="/admin/user/<%= assignment.user_id %>/quiz/<%= @quiz.id %>"><%= User.where(id: assignment.user_id).first.first_name %> <%= User.where(id: assignment.user_id).first.last_name %></a></td>
+      <% else %>
+        <td><%= User.where(id: assignment.user_id).first.first_name %> <%= User.where(id: assignment.user_id).first.last_name %></td>
+      <% end %>
       <% if assignment.score.to_i <= 50 and assignment.score != nil %>
         <td style="background-color:red; color:white;"><%= assignment.score %>%</td>
       <% elsif assignment.score.to_i >= 51 and assignment.score.to_i <= 80 %>
