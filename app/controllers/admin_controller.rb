@@ -282,6 +282,10 @@ class AdminController < ApplicationController
 		
 	end
 	unassigned_user_array.each do |user_id|
+		if User.where(id: user_id).first.quiz_results.where(quiz_setup_id: params[:id]).first != nil
+			flash[:error] = "The user(s) you are trying to remove have already started taking the quiz"
+			redirect_to "/admin/quiz-builder/#{params[:id]}" and return
+		end
 		assignment = User.find(user_id).assignments.where(quiz_setup_id: params[:id]).first
 		if assignment != nil
 			assignment.is_assigned = false
