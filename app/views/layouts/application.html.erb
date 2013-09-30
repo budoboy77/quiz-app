@@ -44,12 +44,12 @@
                 <ul class="nav  pull-right">
                   <% if Admin.where(id: session[:admin_id]).first != nil %>
                     <li class="<%= 'active' if @title == "Quiz Results" %>"><a href="/admin/quizzes">Quiz Results</a></li>
-                    <li class="<%= 'active' if @title.include? "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quiz Builder</a></li>
-                    <li class="<%= 'active' if @title.include? "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
-                    <li class="<%= 'active' if @title.include? "Categories" %>"><a href="/admin/categories/new">Categories</a></li>
-                    <li class="<%= 'active' if @title.include? "User" %>"><a href="/admin/users/index">Users</a></li>
+                    <li class="<%= 'active' if @title == "Quiz Builder" %>"><a href="/admin/quiz-builder/new">Quiz Builder</a></li>
+                    <li class="<%= 'active' if @title == "Questions" %>"><a href="/admin/questions/new">Questions</a></li>
+                    <li class="<%= 'active' if @title == "Categories" %>"><a href="/admin/categories/new">Categories</a></li>
+                    <li class="<%= 'active' if @title == "Users" %>"><a href="/admin/users/index">Users</a></li>
                   <% else %>
-                    <li class="<%= 'active' if @title.include? "My Quizzes" %>"><a href="/myquizzes">My Quizzes</a></li>
+                    <li class="<%= 'active' if @title == "My Quizzes" %>"><a href="/myquizzes">My Quizzes</a></li>
                   <% end %>
                     <li>
                       <a href="/logout">Logout</a> 
