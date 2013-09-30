@@ -45,7 +45,11 @@
   <tbody>
     <% @questions.each do |question| %>
     <tr>
-      <td><a class=btn href="/admin/questions/<%= question.id %>">Edit</a></td>
+      <% if QuizResult.where(question_id: question.id).first == nil %>
+        <td><a class=btn href="/admin/questions/<%= question.id %>">Edit</a></td>
+      <% else %>
+        <td>----------</td>
+      <% end %>
       <td><%= question.category.name %></td>
       <td><%= question.type.name %></td>
       <td><%= question.question_text %></td>
