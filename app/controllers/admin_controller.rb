@@ -211,6 +211,12 @@ class AdminController < ApplicationController
     QuizSetup.find(params[:id]).assignments.where(is_assigned: true).all.each do |user|
       @users_array << User.find(user.user_id).id
     end
+    @user_not_taken_quiz = []
+    User.all.each do |user|
+    	if User.find(user.id).quiz_results.where(quiz_setup_id: params[:id]).first == nil
+    		@user_not_taken_quiz << user.id
+    	end
+    end
   else
 		@edit_quiz_setup_id = "new"
 		@edit_quiz_setup_name = ""
