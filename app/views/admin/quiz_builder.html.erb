@@ -61,7 +61,12 @@
   <% elsif params[:id] == "new" %>    
     <%= submit_tag "Add quiz", :class => 'btn' %>
   <% else %>
-    <h4>Quiz has been taken and cannot be edited.</h4> <%= submit_tag "Add/Remove Users", :class => 'btn' %> <a class=btn href="/admin/quiz-builder/new">Go back to new question</a>
+    <h4>Quiz has been taken and cannot be edited.</h4>
+    <% if @user_not_taken_quiz != [] %>
+      You may add or remove users if they have not taken the quiz yet.<br>
+      <%= submit_tag "Add/Remove Users", :class => 'btn' %>
+    <% end %>
+    <a class=btn href="/admin/quiz-builder/new">Go back to new question</a>
   <% end %>
   <% end %> <!-- This end is for the form tag. -->
 </div>
