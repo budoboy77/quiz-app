@@ -21,7 +21,7 @@
       </tr>
   </table>
   <% if params[:id] != "new" %>
-    <%== submit_tag "Update question", :class => 'btn' %> <%== submit_tag "Delete question", :class => 'btn' %> <a class='btn' href="/admin/categories/new">Go back to new category</a>
+    <%== submit_tag "Update question", :class => 'btn' %> <%== submit_tag "Delete question", :class => 'btn' %> <a class='btn' href="/admin/questions/new">Go back to new question</a>
   <% else %>    
     <%== submit_tag "Add question", :class => 'btn' %>
   <% end %>
