@@ -39,7 +39,7 @@
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
-              <a class="brand" href="#">QuiZapp - <%= @title %></a>
+              <a class="brand">QuiZapp - <%= @title %></a>
               <div class="navbar-content">
                 <ul class="nav  pull-right">
                   <% if Admin.where(id: session[:admin_id]).first != nil %>
