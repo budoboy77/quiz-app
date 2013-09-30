@@ -2,7 +2,7 @@
   <div class="well">
     <h4>Quiz list</h4>
     <% @quizzes.all.each do |quiz| %>
-	    <a href="/admin/quizzes/<%= quiz.id %>"><%= quiz.name %></a>
+	    <a href="/admin/quizzes/<%= quiz.id %>"><%= quiz.name %></a><br>
 	  <% end %>
   </div>
 </div>
