@@ -2,13 +2,8 @@ Pony.options = {
   from: "quizapp@quizapp.com",
   via: :smtp,
   via_options: {
-    address:              "smtp.gmail.com",
-    port:                 "587",
-    user_name:            ENV["SMTP_USERNAME"] ||
-                          raise("Please set SMTP_USERNAME"),
-    password:             ENV["SMTP_PASSWORD"] ||
-                          raise("Please set SMTP_PASSWORD"),
-    authentication:       "plain",
-    enable_starttls_auto: true,
+    address:              "172.16.100.83",
+    port:                 "25",
+    authentication:       "none",
   },
 }
